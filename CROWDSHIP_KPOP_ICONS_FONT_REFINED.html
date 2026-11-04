@@ -1,0 +1,1075 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#F7F3FF" />
+<meta name="description" content="CROWDSHIP - Demo nền tảng điều phối mua hộ và vận chuyển K-pop Hàn Quốc - Việt Nam theo mô hình Hybrid Delivery." />
+<title>CROWDSHIP · Mua hộ K-pop Hàn – Việt, đúng bản, đúng hạn</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238b5cf6'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M14 36L50 16L40 50L30 38Z' fill='%23fff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;700;800&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================
+   1. TOKENS & BASE
+   ========================================================= */
+:root{--bg:#0b0a14;--bg2:#110f1f;--surface:rgba(255,255,255,.045);--surface2:rgba(255,255,255,.085);--border:rgba(255,255,255,.1);--text:#f4f2ff;--muted:#a9a4c7;--b1:#8b5cf6;--b2:#ec4899;--b3:#22d3ee;--good:#34d399;--warn:#fbbf24;--bad:#fb7185;--r:18px;--grad:linear-gradient(120deg,var(--b1),var(--b2));--font:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;--disp:'Space Grotesk','Be Vietnam Pro',system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}h1,h2,h3,h4{font-family:var(--disp);line-height:1.15;margin:0;letter-spacing:-.01em}p{margin:0 0 1em}ul,ol{margin:0;padding:0}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid var(--b3);outline-offset:3px;border-radius:8px}
+.container{width:min(1160px,100% - 40px);margin-inline:auto}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.muted{color:var(--muted)}.small{font-size:.85rem}.mono{font-family:ui-monospace,Menlo,monospace}.num{text-align:right}
+.note{font-size:.85rem;color:var(--muted);border-left:3px solid var(--b1);padding:4px 0 4px 12px;margin:18px 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;border:1px solid transparent;font-weight:600;transition:.2s}
+.btn-sm{padding:8px 16px;font-size:.9rem}.btn-lg{padding:14px 26px;font-size:1.02rem}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 10px 30px -10px rgba(236,72,153,.7)}
+.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 16px 36px -10px rgba(236,72,153,.85)}
+.btn-ghost{background:var(--surface);border-color:var(--border)}.btn-ghost:hover{background:var(--surface2);transform:translateY(-2px)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.85rem;transition:.2s}
+.chip:hover:not(:disabled){background:var(--surface2);border-color:var(--b1)}.chip:disabled{opacity:.4;cursor:default}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;backdrop-filter:blur(10px);transition:transform .3s,border-color .3s}
+.card:hover{border-color:rgba(139,92,246,.5)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.7,.2,1) var(--d,0ms),transform .7s cubic-bezier(.2,.7,.2,1) var(--d,0ms)}
+.reveal.in{opacity:1;transform:none}
+.fade-up{opacity:0;animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) var(--d,0ms) forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0ms!important}.reveal{opacity:1;transform:none}}
+
+/* =========================================================
+   2. NAVBAR / HERO / SECTION LAYOUT / FOOTER
+   ========================================================= */
+.navbar{position:fixed;inset:0 0 auto 0;z-index:50;border-bottom:1px solid transparent;transition:.3s}
+.navbar.scrolled{background:rgba(11,10,20,.72);backdrop-filter:blur(16px);border-color:var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:inline-flex;align-items:center;gap:10px;font:700 1.2rem var(--disp);letter-spacing:.02em}.brand b{color:var(--b2)}
+.brand-mark{width:36px;height:36px;border-radius:11px;background:var(--grad);display:grid;place-items:center;box-shadow:0 8px 20px -8px var(--b2)}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a:not(.btn){padding:8px 14px;border-radius:999px;color:var(--muted);font-weight:500;font-size:.95rem;transition:.2s}
+.nav-links a:not(.btn):hover{color:var(--text);background:var(--surface)}.nav-cta{margin-left:8px}
+.progress{height:2px;background:var(--grad);width:0}
+.burger{display:none;background:none;border:0;width:42px;height:42px;padding:10px;flex-direction:column;justify-content:center;gap:5px}
+.burger span{display:block;height:2px;background:var(--text);border-radius:2px}
+@media(max-width:820px){.burger{display:flex}.nav-links{position:absolute;top:68px;left:12px;right:12px;flex-direction:column;align-items:stretch;background:rgba(17,15,31,.96);backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:18px;padding:12px;opacity:0;pointer-events:none;transform:translateY(-8px);transition:.25s}.nav-links.open{opacity:1;pointer-events:auto;transform:none}.nav-links a:not(.btn){padding:12px 14px}.nav-cta{margin:6px 0 0}}
+
+.hero{position:relative;padding:150px 0 0;overflow:hidden;isolation:isolate}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;z-index:-1;animation:drift 18s ease-in-out infinite alternate}
+.blob-1{width:520px;height:520px;background:var(--b1);top:-120px;left:-140px}.blob-2{width:460px;height:460px;background:var(--b2);top:80px;right:-140px;animation-delay:-6s}.blob-3{width:360px;height:360px;background:var(--b3);bottom:-160px;left:38%;opacity:.28;animation-delay:-11s}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.12)}}
+.grid-bg{position:absolute;inset:0;z-index:-1;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:56px 56px;opacity:.35;-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 20%,transparent 70%);mask-image:radial-gradient(ellipse at 50% 30%,#000 20%,transparent 70%)}
+.hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-bottom:80px}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-size:.88rem;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--good);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.7)}70%,100%{box-shadow:0 0 0 10px rgba(52,211,153,0)}}
+.hero h1{font-size:clamp(2.3rem,5.4vw,4rem);margin:22px 0 18px;font-weight:700}
+.hero-sub{font-size:1.12rem;color:var(--muted);max-width:560px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin:28px 0}
+.hero-stats{list-style:none;display:flex;gap:34px;flex-wrap:wrap}.hero-stats li{display:flex;flex-direction:column}
+.hero-stats b{font:700 2rem/1 var(--disp);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-stats span{font-size:.85rem;color:var(--muted);max-width:120px;margin-top:4px}
+.hero-visual{position:relative;height:470px}
+.pcard{position:absolute;width:190px;height:290px;border-radius:18px;padding:14px;color:#fff;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(155deg,hsl(var(--h) 85% 62%),hsl(calc(var(--h) + 40) 80% 40%));box-shadow:0 30px 60px -20px hsl(var(--h) 90% 50%/.7),inset 0 0 0 1px rgba(255,255,255,.3)}
+.pcard .shine{position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.45) 50%,transparent 60%);animation:shine 4.5s ease-in-out infinite}
+@keyframes shine{0%,30%{transform:translateX(-60%)}70%,100%{transform:translateX(60%)}}
+.pc-top{display:flex;justify-content:space-between;font-size:.72rem;font-weight:700;letter-spacing:.08em;position:relative}
+.pc-ver{background:rgba(0,0,0,.25);padding:2px 8px;border-radius:999px;font-weight:600;letter-spacing:0}
+.pc-art{flex:1;margin:10px 0;border-radius:12px;background:rgba(255,255,255,.16);overflow:hidden;position:relative}.pc-art svg{width:100%;height:100%}
+.pc-name{font:700 1.15rem var(--disp);position:relative}
+.pc-1{left:18%;top:40px;transform:rotate(-9deg);animation:fA 7s ease-in-out infinite;z-index:2}
+.pc-2{right:2%;top:0;transform:rotate(8deg);animation:fB 8s ease-in-out infinite}
+.pc-3{left:34%;bottom:0;transform:rotate(3deg);animation:fA 9s ease-in-out -3s infinite;z-index:3}
+@keyframes fA{50%{transform:translateY(-16px) rotate(-6deg)}}@keyframes fB{50%{transform:translateY(14px) rotate(11deg)}}
+.float-chip{position:absolute;z-index:5;padding:9px 14px;border-radius:14px;font-size:.82rem;font-weight:600;background:rgba(17,15,31,.85);backdrop-filter:blur(10px);border:1px solid var(--border);box-shadow:0 20px 60px -20px rgba(139,92,246,.45);animation:fB 6s ease-in-out infinite;white-space:nowrap}
+.chip-a{left:0;bottom:120px}.chip-b{right:0;bottom:30px;animation-delay:-2s}
+.ticker{overflow:hidden;border-block:1px solid var(--border);background:rgba(255,255,255,.025);padding:14px 0}
+.ticker-track{display:flex;gap:38px;width:max-content;animation:marquee 32s linear infinite}
+.ticker span{color:var(--muted);font-weight:600;letter-spacing:.04em;white-space:nowrap}.ticker em{font-style:normal;color:var(--b2);margin-left:38px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@media(max-width:920px){.hero{padding-top:120px}.hero-inner{grid-template-columns:1fr}.hero-visual{height:400px;max-width:420px;margin:0 auto;width:100%}.pcard{width:160px;height:245px}.chip-a{bottom:90px}}
+
+.section{padding:100px 0;position:relative}
+.section-alt{background:linear-gradient(180deg,transparent,var(--bg2) 12%,var(--bg2) 88%,transparent)}
+.section-head{max-width:720px;margin-bottom:48px}
+.eyebrow{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--b3);margin-bottom:12px}
+.section-head h2{font-size:clamp(1.8rem,3.6vw,2.7rem);margin-bottom:14px}.lead{color:var(--muted);font-size:1.08rem;margin:0}
+.footer{border-top:1px solid var(--border);padding:48px 0 28px;background:#08070f}
+.footer-inner{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.footer-inner p{color:var(--muted);max-width:460px;margin-top:12px;font-size:.95rem}
+.footer nav{display:flex;gap:8px 22px;flex-wrap:wrap;align-content:flex-start}.footer nav a{color:var(--muted)}.footer nav a:hover{color:var(--text)}
+.footer-note{margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}.footer-note p{font-size:.82rem;color:var(--muted);margin:0}
+@media(max-width:640px){.section{padding:72px 0}}
+
+/* =========================================================
+   3. PROBLEM / SOLUTION / CANVAS / PLAN
+   ========================================================= */
+.stat-grid,.problem-grid,.canvas-grid,.eval-grid{display:grid;gap:20px}
+.stat-grid{grid-template-columns:repeat(3,1fr)}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:26px}
+.stat-num{font:700 3rem/1 var(--disp);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}.stat-num small{font-size:1.5rem}
+.stat-card p{margin:10px 0 16px;color:var(--muted)}
+.stat-bar{height:6px;background:var(--surface2);border-radius:99px;overflow:hidden}.stat-bar span{display:block;height:100%;background:var(--grad);border-radius:99px;width:0;transition:width 1.6s cubic-bezier(.2,.7,.2,1) .2s}
+.problem-grid{grid-template-columns:repeat(4,1fr);margin-top:34px}
+.problem-card:hover{transform:translateY(-6px)}
+.icon-badge{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;background:var(--surface2);margin-bottom:16px}
+.problem-card h3{font-size:1.1rem;margin-bottom:8px}.problem-card p{color:var(--muted);font-size:.93rem}
+.solve{font-size:.85rem;padding:10px 12px;border-radius:12px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3)}
+@media(max-width:980px){.problem-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.stat-grid,.problem-grid{grid-template-columns:1fr}}
+
+.flow{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
+.flow li{display:flex;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:.3s}.flow li:hover{transform:translateY(-4px);border-color:var(--b1)}
+.flow-n{flex:none;width:42px;height:42px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font:700 1.1rem var(--disp)}
+.flow small{color:var(--b3);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}.flow h3{font-size:1.05rem;margin:2px 0 4px}.flow p{margin:0;color:var(--muted);font-size:.9rem}
+.hybrid{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-top:34px}
+.hybrid-card{position:relative}.hybrid-card h3{margin:8px 0 6px}.hybrid-card .when{color:var(--muted);font-size:.92rem}
+.hybrid-card ul{list-style:none;display:grid;gap:8px}.hybrid-card li{padding-left:24px;position:relative;font-size:.93rem}.hybrid-card li::before{content:'✓';position:absolute;left:0;color:var(--good);font-weight:700}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(139,92,246,.2);color:#c4b5fd;text-transform:uppercase;letter-spacing:.06em}.tag-alt{background:rgba(34,211,238,.15);color:#67e8f9}
+.hybrid-or{align-self:center;font:700 .9rem var(--disp);color:var(--muted);width:54px;height:54px;border-radius:50%;border:1px dashed var(--border);display:grid;place-items:center}
+.is-traveler{border-top:3px solid var(--b1)}.is-standard{border-top:3px solid var(--b3)}
+.formula{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;margin-top:34px;align-items:center}
+.formula h3{margin-bottom:10px}.formula p{color:var(--muted);margin:0}
+.formula-box{background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:14px;padding:18px}
+.formula-box code{display:block;font:600 1rem ui-monospace,Menlo,monospace;color:#f9a8d4;margin-bottom:12px;word-break:break-word}
+.formula-box ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:.88rem;color:var(--muted)}.formula-box b{color:var(--text);margin-right:4px}.formula-box em{font-style:normal;float:right;color:var(--b3)}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.hybrid{grid-template-columns:1fr}.hybrid-or{margin:0 auto}.formula{grid-template-columns:1fr}}@media(max-width:600px){.flow{grid-template-columns:1fr}}
+
+.canvas-grid{grid-template-columns:repeat(3,1fr)}.canvas-card:hover{transform:translateY(-6px)}
+.canvas-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.canvas-n{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font:700 .9rem var(--disp)}.canvas-ico{font-size:1.6rem}
+.canvas-card h3{font-size:1.05rem;margin-bottom:8px}.canvas-card p{margin:0;color:var(--muted);font-size:.9rem}
+.eval-grid{grid-template-columns:1.2fr 1fr;margin-top:24px}.eval-card h3{margin-bottom:18px}
+.rings{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:12px}
+.ring{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:.82rem;color:var(--muted);width:110px}
+.ring-bg{fill:none;stroke:var(--surface2);stroke-width:8}.ring-fg{fill:none;stroke:url(#rg);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1)}.ring text{fill:var(--text);font:700 16px var(--disp)}
+.feas{list-style:none;display:grid;gap:12px}.feas li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--border)}.feas li:last-child{border:0;padding:0}
+.pill-status{font-style:normal;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:99px;text-align:right}.pill-status.cond{background:rgba(251,191,36,.15);color:var(--warn)}.pill-status.no{background:rgba(251,113,133,.15);color:var(--bad)}
+@media(max-width:900px){.canvas-grid{grid-template-columns:1fr 1fr}.eval-grid{grid-template-columns:1fr}}@media(max-width:600px){.canvas-grid{grid-template-columns:1fr}}
+
+.plan-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px}.col-h{font-size:1.2rem;margin-bottom:22px}
+.roadmap{list-style:none;position:relative;padding-left:26px;border-left:2px solid var(--border)}
+.roadmap li{position:relative;padding-bottom:22px}.roadmap li:last-child{padding-bottom:0}
+.rm-dot{position:absolute;left:-34px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--grad);box-shadow:0 0 0 5px var(--bg2)}
+.roadmap small{color:var(--b3);font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;display:block}.roadmap b{font-family:var(--disp)}.roadmap p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+.risks{display:grid;gap:10px}
+.risk{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s}.risk.open{border-color:var(--b1)}
+.risk-head{width:100%;display:flex;align-items:center;gap:12px;padding:15px 18px;background:none;border:0;text-align:left;font-weight:600}
+.risk-head span{flex:1}.risk-head em{font-style:normal;font-size:.75rem;color:var(--warn);background:rgba(251,191,36,.12);padding:3px 9px;border-radius:99px;white-space:nowrap}
+.risk-head i{font-style:normal;transition:transform .3s;color:var(--muted)}.risk.open .risk-head i{transform:rotate(45deg)}
+.risk-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s}.risk.open .risk-body{grid-template-rows:1fr}
+.risk-body>div{overflow:hidden;padding:0 18px;font-size:.9rem;color:var(--muted)}.risk.open .risk-body>div{padding-bottom:6px}.risk-body b{color:var(--text)}
+.legal{margin-top:18px}.legal h4{margin-bottom:10px}.legal ul{padding-left:18px;color:var(--muted);font-size:.9rem;display:grid;gap:6px}
+@media(max-width:900px){.plan-grid{grid-template-columns:1fr}}
+
+/* =========================================================
+   4. DEMO
+   ========================================================= */
+.demo-shell{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:26px;overflow:hidden;box-shadow:0 40px 100px -40px rgba(139,92,246,.5)}
+.stepper{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);background:rgba(0,0,0,.25)}
+.step{background:none;border:0;border-bottom:3px solid transparent;padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);transition:.25s;font-size:.88rem;font-weight:500}
+.step:disabled{opacity:.35;cursor:not-allowed}.step:not(:disabled):hover{background:var(--surface)}.step .ico{font-size:1.3rem}
+.step.past{color:var(--text)}.step.active{color:var(--text);border-color:var(--b2);background:linear-gradient(180deg,transparent,rgba(236,72,153,.12))}
+@media(max-width:560px){.step .lbl{font-size:.7rem}}
+.demo-panel{animation:panelIn .45s cubic-bezier(.2,.7,.2,1)}@keyframes panelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.panel-body{padding:30px}@media(max-width:600px){.panel-body{padding:20px 16px}}
+.sub-h{font-size:1.15rem;margin:22px 0 12px}
+.panel-actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:26px}
+
+.presets{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:20px;font-size:.88rem;color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}.span-2{grid-column:1/-1}
+label,.lbl-like{display:flex;flex-direction:column;gap:6px;font-size:.88rem;font-weight:600;color:var(--muted)}label small{font-weight:400}
+select,input[type=number]{background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--text);font-weight:500;transition:.2s;width:100%}
+select:focus,input[type=number]:focus{border-color:var(--b1);outline:none;box-shadow:0 0 0 3px rgba(139,92,246,.25)}
+select option{background:#16132a}.has-error input{border-color:var(--bad)}.err{color:var(--bad);font-style:normal;font-weight:500;font-size:.8rem}
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.type-card{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px;border-radius:14px;background:rgba(0,0,0,.3);border:1px solid var(--border);color:var(--text);font-weight:600;cursor:pointer;transition:.2s}
+.type-card input,.seg input{position:absolute;opacity:0;pointer-events:none}
+.type-card:hover{border-color:var(--b1);transform:translateY(-2px)}.type-card:has(input:checked){border-color:var(--b2);background:rgba(236,72,153,.12);box-shadow:0 0 0 3px rgba(236,72,153,.18)}
+.type-card .ti{font-size:1.5rem}.type-card b{font-size:.88rem}.type-card small{color:var(--muted);font-weight:400;font-size:.76rem}
+.seg{display:flex;gap:8px;flex-wrap:wrap}.seg label{flex:1;min-width:110px;text-align:center;padding:10px;border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.3);cursor:pointer;color:var(--text);transition:.2s;position:relative}
+.seg label:has(input:checked){background:var(--grad);border-color:transparent}
+.form-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:22px;border-top:1px solid var(--border)}.estimate{color:var(--muted)}.estimate b{color:var(--text);font-size:1.1rem}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr}.type-grid{grid-template-columns:1fr 1fr}}
+
+.order-summary{display:flex;gap:14px;align-items:center;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.order-summary .os-i{font-size:1.8rem}.order-summary b{display:block}.order-summary small{color:var(--muted)}
+.scanner{text-align:center;padding:60px 0;color:var(--muted)}
+.scan-ring{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;border:4px solid var(--surface2);border-top-color:var(--b2);border-right-color:var(--b1);animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.match-list{display:grid;gap:14px}
+.match-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:var(--d)}
+.match-card.top{border-color:var(--b2);background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(236,72,153,.1))}
+.mc-head{display:flex;align-items:center;gap:14px}.avatar{width:46px;height:46px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font:700 1.2rem var(--disp)}
+.mc-name{flex:1}.mc-name b{display:block}.mc-name small{color:var(--muted)}.verified{font-size:.72rem;color:var(--good);background:rgba(52,211,153,.12);padding:2px 8px;border-radius:99px;margin-left:6px;font-weight:600}
+.mc-score{text-align:right}.mc-score strong{font:700 2rem/1 var(--disp);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}.mc-score small{color:var(--muted)}
+.score-bars{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin:16px 0}
+.sb{display:grid;grid-template-columns:1fr auto;gap:2px 8px;font-size:.8rem;color:var(--muted)}.sb em{font-style:normal;color:var(--b3);margin-left:4px}.sb b{color:var(--text)}
+.sb-track{grid-column:1/-1;height:6px;border-radius:99px;background:var(--surface2);overflow:hidden}.sb-track i{display:block;height:100%;border-radius:99px;background:var(--grad);width:0;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+.mc-foot{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:.86rem;color:var(--muted)}.mc-foot b{color:var(--text)}
+.warn{color:var(--warn);font-size:.82rem;font-weight:600}.badge-top{margin-left:auto;background:var(--grad);color:#fff;padding:3px 12px;border-radius:99px;font-size:.76rem;font-weight:700}
+@media(max-width:560px){.score-bars{grid-template-columns:1fr}}
+.empty-match{text-align:center;padding:40px 16px;border:1px dashed var(--border);border-radius:16px;margin-top:20px}.empty-match .ei{font-size:2.4rem}.empty-match h3{margin:10px 0}.empty-match p{color:var(--muted);max-width:520px;margin:0 auto}
+.rejected{margin-top:18px;background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:14px;padding:4px 16px}.rejected summary{cursor:pointer;padding:12px 0;font-weight:600;font-size:.92rem;color:var(--muted)}
+.rejected ul{list-style:none;display:grid;gap:8px;padding:4px 0 14px}.rejected li{font-size:.86rem;color:var(--muted);display:flex;flex-direction:column}.rejected li b{color:var(--text)}
+
+.option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:6px}
+.option{position:relative;text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:4px;transition:.25s;animation:fadeUp .5s backwards;animation-delay:var(--d)}
+.option:hover{transform:translateY(-4px);border-color:var(--b1)}.option.sel{border-color:var(--b2);background:linear-gradient(160deg,rgba(236,72,153,.14),rgba(139,92,246,.1));box-shadow:0 0 0 3px rgba(236,72,153,.2)}
+.option.sel::after{content:'✓';position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.op-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding-right:26px}.op-method{font-size:.8rem;color:var(--b3);font-weight:700}
+.badge{font-style:normal;font-size:.7rem;font-weight:700;background:rgba(52,211,153,.15);color:var(--good);padding:2px 8px;border-radius:99px}
+.option h4{font-size:1.15rem;margin-top:4px}.op-sub{color:var(--muted)}.op-total{font:700 1.5rem var(--disp);margin:8px 0}
+.option ul{list-style:none;display:grid;gap:5px;font-size:.84rem;border-top:1px solid var(--border);padding-top:10px}.option li{display:flex;justify-content:space-between;gap:10px;color:var(--muted)}.option li b{color:var(--text);text-align:right;font-weight:500}.option .warn{margin-top:8px}
+
+.track-head{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 22px}.track-head>div{background:rgba(0,0,0,.28);border:1px solid var(--border);border-radius:12px;padding:12px 14px}.track-head small{display:block;color:var(--muted);font-size:.76rem}
+.track-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:26px}
+.timeline{list-style:none;display:grid;gap:0}.timeline li{display:flex;gap:14px;padding-bottom:20px;position:relative;color:var(--muted)}
+.timeline li::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:2px;background:var(--border)}.timeline li:last-child::before{display:none}.timeline li.done::before{background:var(--good)}
+.tl-dot{flex:none;width:32px;height:32px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-size:.82rem;font-weight:700;z-index:1;transition:.3s}
+.timeline li.done .tl-dot{background:var(--good);color:#06281b}.timeline li.cur .tl-dot{background:var(--grad);color:#fff;animation:ping 1.6s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(236,72,153,.6)}100%{box-shadow:0 0 0 12px rgba(236,72,153,0)}}
+.timeline li.done,.timeline li.cur{color:var(--text)}.timeline b{display:block}.timeline small{color:var(--muted)}
+.evidence{background:rgba(0,0,0,.28);border:1px solid var(--border);border-radius:16px;padding:18px;align-self:start}.evidence h4{margin-bottom:12px}
+.evidence ul{list-style:none;display:grid;gap:8px}.evidence li{display:flex;gap:8px;padding:9px 12px;border-radius:10px;background:var(--surface);font-size:.88rem;animation:fadeUp .4s}
+.done-box{margin-top:14px;padding:14px;border-radius:12px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);animation:fadeUp .5s}.done-box p{margin:4px 0 0;font-size:.86rem;color:var(--muted)}
+@media(max-width:760px){.track-wrap{grid-template-columns:1fr}.track-head{grid-template-columns:1fr}}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;animation:fadeUp .5s backwards;animation-delay:var(--d,0ms)}
+.kpi small{color:var(--muted);display:block;font-size:.78rem}.kpi b{font:700 1.5rem var(--disp);display:block;margin:2px 0}.kpi span{font-size:.74rem;color:var(--muted)}.kpi b.good{color:var(--good)}.kpi b.bad{color:var(--bad)}
+@media(max-width:800px){.kpi-grid{grid-template-columns:1fr 1fr}}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:640px}th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border)}th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;background:rgba(0,0,0,.25)}tr:last-child td{border:0}th.num,td.num{text-align:right}
+.row-new{background:rgba(236,72,153,.1);animation:fadeUp .6s}
+.status{font-size:.76rem;font-weight:600;padding:3px 10px;border-radius:99px;white-space:nowrap}.status.good{background:rgba(52,211,153,.15);color:var(--good)}.status.warn{background:rgba(251,191,36,.15);color:var(--warn)}.status.bad{background:rgba(251,113,133,.15);color:var(--bad)}.status.info{background:rgba(34,211,238,.15);color:var(--b3)}
+
+/* =========================================================
+   5. FINANCE SIMULATOR
+   ========================================================= */
+.fin-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:start}
+.fin-controls-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.slider{margin:16px 0;gap:4px}.slider span{display:flex;justify-content:space-between;color:var(--text)}.slider em{font-style:normal;color:var(--b3);font-weight:600}.slider small{font-weight:400}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;background:var(--surface2);outline-offset:6px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--grad);border:3px solid #fff;box-shadow:0 4px 12px rgba(236,72,153,.5);cursor:grab}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--b2);border:3px solid #fff;cursor:grab}
+.fin-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.fin-kpis .kpi{animation:none}
+@media(max-width:1000px){.fin-layout{grid-template-columns:1fr}}@media(max-width:600px){.fin-kpis{grid-template-columns:1fr 1fr}}
+.chart-card{padding:18px}.chart-legend{display:flex;gap:18px;font-size:.8rem;color:var(--muted);margin-bottom:6px;flex-wrap:wrap}.lg{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}.lg.n{background:var(--bad)}.lg.l{background:var(--b3);border-radius:99px}
+.chart{width:100%;height:auto}.axis-text{fill:var(--muted);font-size:11px}.grid-line{stroke:var(--border);stroke-dasharray:3 4}.axis-zero{stroke:rgba(255,255,255,.4)}
+.bar{transform-box:fill-box;transform-origin:center;animation:grow .7s cubic-bezier(.2,.7,.2,1) backwards}@keyframes grow{from{transform:scaleY(0)}}
+.bar.pos{fill:var(--good)}.bar.neg{fill:var(--bad);opacity:.85}.cum-line{stroke:var(--b3);stroke-width:2.5;stroke-linejoin:round}.cum-dot{fill:var(--b3);stroke:var(--bg2);stroke-width:2}
+.verdict{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:14px;padding:18px 22px;border-radius:16px;border:1px solid}
+.verdict.good{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.4)}.verdict.bad{background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.4)}
+.verdict small{color:var(--muted);display:block}.verdict b{font:700 1.7rem var(--disp)}.verdict.good b{color:var(--good)}.verdict.bad b{color:var(--bad)}.verdict p{margin:0;color:var(--muted);max-width:340px;font-size:.9rem}
+
+/* ===== GIAO DIỆN MỚI (theo crowdship-2.web.app) ===== */
+:root{--bg:#0a1a33;--bg2:#102b50;--b1:#5b8def;--b2:#ff7a9c;--b3:#ffd27a;--grad:linear-gradient(120deg,#5b8def,#ff7a9c)}
+body{background:radial-gradient(1200px 600px at 80% -10%,rgba(91,141,239,.18),transparent 60%),var(--bg)}
+.section-alt{background:rgba(16,43,80,.45)}
+.navbar.scrolled{background:rgba(10,26,51,.82)}
+.nav-links .btn-ghost{padding:8px 16px;font-size:.9rem}
+.eyebrow-up{display:inline-block;font:600 .74rem var(--disp);letter-spacing:.18em;text-transform:uppercase;color:var(--b3)}
+.hero-steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:620px;margin-top:6px}
+.hero-steps li{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:.82rem;color:var(--muted)}
+.hero-steps b{display:block;color:var(--text);font-size:.9rem;margin-top:2px}.hero-steps i{font:700 .75rem var(--disp);color:var(--b2);font-style:normal}
+.filter{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}.chip.on{background:var(--grad);border-color:transparent;color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.pcard{display:flex;flex-direction:column;gap:8px;padding:0;overflow:hidden}.pcard:hover{transform:translateY(-4px)}
+.pcard .ph{height:150px;display:grid;place-items:center;font-size:3rem;position:relative}
+.pcard .ph em{position:absolute;top:10px;left:10px;font:600 .7rem var(--disp);letter-spacing:.1em;background:rgba(10,26,51,.65);padding:3px 10px;border-radius:99px;font-style:normal}
+.pcard .pb{padding:4px 18px 18px;display:flex;flex-direction:column;gap:4px;flex:1}.pcard h4{font-size:1.02rem}.pcard .pr{font:700 1.1rem var(--disp);margin-top:auto;padding-top:8px}
+.cmp{width:100%;border-collapse:collapse}.cmp th,.cmp td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}.cmp thead th{font-family:var(--disp)}.cmp td:first-child{color:var(--muted);width:24%}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.tcard{text-align:center}.avatar{width:64px;height:64px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font:700 1.5rem var(--disp);margin:0 auto 10px}
+.tcard .meta{font-size:.82rem;color:var(--muted)}.vf{display:inline-block;margin-top:8px;font-size:.75rem;padding:3px 10px;border-radius:99px;background:rgba(52,211,153,.15);color:var(--good)}.vf.no{background:rgba(251,191,36,.15);color:var(--warn)}
+.trk-form{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.trk-form input{flex:1;min-width:220px;padding:12px 18px;border-radius:999px;border:1px solid var(--border);background:var(--surface)}
+.tl{list-style:none;display:grid;gap:14px;margin-top:14px}.tl li{display:flex;gap:12px;align-items:flex-start}.tl .ic{width:30px;height:30px;border-radius:50%;background:var(--surface2);display:grid;place-items:center;flex:none;font-size:.85rem}.tl .ok .ic{background:var(--good);color:#06281c}.tl small{display:block;color:var(--muted)}
+.cta-band{text-align:center;padding:56px 24px;border-radius:26px;background:linear-gradient(120deg,rgba(91,141,239,.25),rgba(255,122,156,.25));border:1px solid var(--border)}
+@media(max-width:700px){.hero-steps{grid-template-columns:1fr}.cmp{font-size:.85rem}}
+
+/* ===== Dọn dẹp & tối ưu mobile / GenZ ===== */
+.mt-l{margin-top:22px}.section-flush{padding-top:0}.tcard-cta{display:grid;place-items:center}
+.btn,.chip{min-height:44px}.chip{white-space:nowrap}.btn:active,.chip:active{transform:scale(.96)}
+.filter{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:4px;scrollbar-width:none}.filter::-webkit-scrollbar{display:none}.filter .chip{scroll-snap-align:start;flex:none}
+.pcard .ph{transition:transform .3s}.pcard:hover .ph{transform:scale(1.04)}.pcard{overflow:hidden}
+.mobile-cta{display:none}
+@media(min-width:701px){.filter{flex-wrap:wrap;overflow:visible}}
+@media(max-width:700px){body{padding-bottom:84px}.mobile-cta{display:flex;position:fixed;left:16px;right:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;min-height:52px}.hero{padding-top:120px}}
+
+/* ===== Danh mục ===== */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:18px}
+.cat{display:flex;flex-direction:column;gap:4px;text-align:left;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--border);position:relative;overflow:hidden;transition:.2s}
+.cat::before{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:hsl(var(--h) 80% 62%)}
+.cat:hover{background:var(--surface2)}
+.cat .ci{font-size:1.6rem}.cat b{font:600 .98rem var(--disp);line-height:1.25}.cat small{color:var(--muted);font-size:.78rem}
+.cat[aria-pressed=true]{border-color:hsl(var(--h) 80% 62%);background:hsl(var(--h) 70% 50%/.15);box-shadow:0 0 0 3px hsl(var(--h) 80% 60%/.22)}
+.cat-detail{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;padding:22px;margin-bottom:22px;border-radius:var(--r);background:var(--surface);border:1px solid var(--border)}
+.cat-detail[hidden]{display:none}
+.cat-detail h3{font-size:1.3rem;margin-bottom:6px}.cat-detail p{margin:0 0 10px}
+.subs{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.subs li{font-size:.82rem;padding:4px 12px;border-radius:99px;border:1px solid var(--border);background:rgba(0,0,0,.25)}
+.cd-act{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.cd-act .pr{font:700 1.1rem var(--disp)}
+.cat-exclude{margin:22px 0 0;font-size:.85rem;color:var(--muted);border-left:3px solid var(--warn);padding:4px 0 4px 12px}
+.pick-note{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.35);font-size:.9rem}
+@media(max-width:640px){.cat-detail{grid-template-columns:1fr}.cd-act{align-items:stretch}}
+</style>
+<style>
+/* ===== GEN Z REMIX: sticker-pop, hard shadows, spring motion ===== */
+:root{--bg:#120c2b;--bg2:#1c1442;--surface:rgba(255,255,255,.06);--surface2:rgba(255,255,255,.12);--border:rgba(255,255,255,.18);--text:#fff8fb;--muted:#bdb4e6;--b1:#7c5cff;--b2:#ff4fa3;--b3:#c8ff3d;--warn:#ffd84d;--ink:#17102e;--grad:linear-gradient(120deg,#ff4fa3,#7c5cff);--r:20px;--disp:'Bricolage Grotesque','Be Vietnam Pro',system-ui,sans-serif;--spring:cubic-bezier(.34,1.56,.64,1)}
+body{background:radial-gradient(900px 520px at 88% -6%,rgba(255,79,163,.24),transparent 60%),radial-gradient(800px 560px at -8% 28%,rgba(124,92,255,.28),transparent 60%),var(--bg)}
+::selection{background:var(--b3);color:var(--ink)}
+h1,h2{font-weight:800;letter-spacing:-.03em}h3,h4{font-weight:700}
+@keyframes pop{0%{transform:scale(.4) rotate(-20deg)}100%{transform:none}}
+@keyframes wiggle{0%,100%{transform:none}25%{transform:rotate(-14deg) scale(1.15)}75%{transform:rotate(14deg) scale(1.15)}}
+@keyframes wordPop{from{opacity:0;transform:translateY(40px) rotate(8deg) scale(.7)}to{opacity:1;transform:none}}
+@keyframes nudge{0%,86%,100%{transform:none}91%{transform:translateY(-7px) rotate(-1.5deg)}96%{transform:translateY(0) rotate(1.5deg)}}
+
+/* buttons: sticker press */
+.btn{border-width:2px;font-weight:700;transition:transform .18s var(--spring),box-shadow .18s,background .2s}
+.btn-primary{background:var(--b3);color:var(--ink);border-color:var(--ink);box-shadow:4px 4px 0 var(--b2)}
+.btn.btn-primary:hover:not(:disabled){transform:translate(-2px,-2px) rotate(-1deg);box-shadow:7px 7px 0 var(--b2)}
+.btn.btn-primary:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 var(--b2)}
+.btn-ghost{border-color:rgba(255,255,255,.4);box-shadow:3px 3px 0 rgba(255,255,255,.14)}
+.btn-ghost:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--b1);border-color:#fff}
+.mobile-cta{animation:nudge 3.6s ease-in-out 2s infinite}
+
+/* nav */
+.progress{height:4px;background:linear-gradient(90deg,var(--b3),var(--b2),var(--b1))}
+.brand{font-weight:800}.brand b{color:var(--b3)}
+.brand-mark{border:2px solid var(--ink);box-shadow:3px 3px 0 var(--b3);transition:transform .3s var(--spring)}.brand:hover .brand-mark{transform:rotate(-12deg) scale(1.1)}
+.nav-links a:not(.btn):hover{background:var(--b3);color:var(--ink);transform:rotate(-2deg)}
+.navbar.scrolled{background:rgba(18,12,43,.85)}
+
+/* hero */
+.hero{padding-bottom:30px}.hero-inner{position:relative}
+.hero h1{font-size:clamp(2.7rem,7vw,5.2rem);line-height:1;letter-spacing:-.035em}
+.hero h1.fade-up{animation:none;opacity:1}
+.w{display:inline-block;animation:wordPop .75s var(--spring) both;animation-delay:calc(var(--i,0)*70ms + 120ms)}
+.pill{border:2px solid var(--b3);background:rgba(200,255,61,.1)}
+.blob-3{opacity:.18}
+.hero-steps li{border-width:2px;transition:transform .25s var(--spring),box-shadow .25s}
+.hero-steps li:nth-child(odd){transform:rotate(-1.5deg)}.hero-steps li:nth-child(even){transform:rotate(1.5deg)}
+.hero-steps li:hover{transform:translateY(-4px);box-shadow:4px 4px 0 var(--b2)}.hero-steps i{color:var(--b3)}
+.hero-visual{transform:perspective(1000px) rotateX(var(--tx,0deg)) rotateY(var(--ty,0deg));transition:transform .25s ease-out}
+.hero-visual .pcard{border:3px solid #fff}
+.float-chip{border:2px solid var(--b3)}
+.sticker{position:absolute;right:2%;top:-10px;width:118px;height:118px;border-radius:50%;background:var(--b3);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--b2);display:grid;place-items:center;z-index:6;animation:spin 14s linear infinite}
+.sticker svg{width:100%;height:100%;position:absolute;inset:0}.sticker text{font:800 11.5px var(--disp);fill:var(--ink)}
+.sticker::after{content:'✦';font-size:2rem;color:var(--b2)}
+.ticker{background:var(--b3);border:0;border-block:3px solid var(--ink);transform:rotate(-1.4deg) scale(1.05);margin:10px 0 14px;box-shadow:0 8px 0 var(--b2)}
+.ticker span{color:var(--ink);font:800 1.05rem var(--disp);letter-spacing:0}.ticker em{color:var(--b2)}
+@media(max-width:920px){.sticker{width:84px;height:84px;top:auto;bottom:90px;right:6px}}
+
+/* sections */
+.section-head h2{font-size:clamp(2rem,4.6vw,3.3rem);line-height:1.02}
+.eyebrow{background:var(--b3);color:var(--ink);padding:4px 12px;border-radius:8px;text-transform:none;letter-spacing:.01em;font-size:.85rem;transform:rotate(-2deg);box-shadow:3px 3px 0 var(--b2)}
+.section-alt{background:rgba(124,92,255,.12);border-block:2px dashed rgba(255,255,255,.14)}
+.footer{background:#0b0720}
+
+/* cards */
+.card,.stat-card,.flow li,.match-card,.option,.kpi,.cat,.risk,.type-card,.evidence,.cat-detail{border:2px solid var(--border)}
+.card,.flow li,.cat,.option{transition:transform .25s var(--spring),box-shadow .25s,border-color .2s,background .2s}
+.card:hover,.flow li:hover,.cat:hover,.option:hover{border-color:#fff;transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--b2)}
+.is-traveler{border-top:6px solid var(--b1)}.is-standard{border-top:6px solid var(--b3)}
+.cat::before{height:6px}.cat:hover .ci,.type-card:hover .ti,.tcard:hover .avatar{animation:wiggle .5s}
+.cat[aria-pressed=true]{border-color:#fff;box-shadow:4px 4px 0 hsl(var(--h) 80% 62%)}
+.option.sel,.option.sel:hover{border-color:var(--b3);box-shadow:5px 5px 0 var(--b3)}
+.type-card:has(input:checked){border-color:var(--b3);background:rgba(200,255,61,.1);box-shadow:4px 4px 0 var(--b2)}
+.type-card:has(input:checked) .ti{animation:pop .4s var(--spring)}
+.seg label:has(input:checked){background:var(--b3);color:var(--ink);box-shadow:3px 3px 0 var(--b2);transform:rotate(-1deg)}
+select,input[type=number],.trk-form input{border-width:2px}
+select:focus,input[type=number]:focus{border-color:var(--b3);box-shadow:0 0 0 3px rgba(200,255,61,.3)}
+.avatar{border:2px solid var(--ink);box-shadow:3px 3px 0 var(--b3)}
+
+/* product cards: holo photocard feel */
+article.pcard{position:relative;transition:transform .15s ease-out,box-shadow .25s,border-color .2s}
+article.pcard:hover{transform:perspective(800px) translateY(-6px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));box-shadow:8px 8px 0 var(--b2);border-color:#fff}
+article.pcard::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 45%),linear-gradient(115deg,transparent 25%,rgba(255,79,163,.18),rgba(200,255,61,.18),rgba(77,180,255,.18),transparent 75%)}
+article.pcard:hover::after{opacity:1}
+.pcard .ph em{background:var(--ink);color:var(--b3);letter-spacing:.02em}.pcard .pr{color:var(--b3)}
+.heart{position:absolute;top:10px;right:10px;width:44px;height:44px;padding:0;border-radius:50%;border:2px solid var(--ink);background:#fff;color:var(--ink);font-size:1.25rem;display:grid;place-items:center;z-index:2;transition:transform .2s var(--spring)}
+.heart:hover{transform:scale(1.15) rotate(8deg)}.heart.on{background:var(--b2);color:#fff;animation:pop .5s var(--spring)}
+
+/* demo */
+.demo-shell{border:2px solid #fff;box-shadow:8px 8px 0 var(--b2)}
+.step.active{border-color:var(--b3);background:linear-gradient(180deg,transparent,rgba(200,255,61,.14))}.step.active .ico{animation:pop .5s var(--spring)}
+.match-card.top{border-color:var(--b3);box-shadow:5px 5px 0 var(--b2)}.badge-top{background:var(--b3);color:var(--ink)}
+.scan-ring{border-top-color:var(--b3);border-right-color:var(--b2)}
+.done-box{border-color:var(--b3);background:rgba(200,255,61,.12);animation:pop .5s var(--spring)}
+.cta-band{background:var(--b2);border:2px solid #fff;box-shadow:8px 8px 0 var(--b3)}
+.cta-band h2{font-size:clamp(2rem,5vw,3.4rem);margin-bottom:10px}.cta-band .muted{color:var(--ink);font-weight:600}.cta-band .btn-primary{box-shadow:4px 4px 0 var(--ink)}
+
+/* fx + toast */
+.fx{position:fixed;left:0;top:0;pointer-events:none;z-index:90;font-weight:800;line-height:1;animation:burst .9s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes burst{0%{opacity:1;transform:translate(var(--x),var(--y)) scale(.4)}100%{opacity:0;transform:translate(calc(var(--x) + var(--dx)),calc(var(--y) + var(--dy))) scale(1.2) rotate(var(--r))}}
+.fx.trail{animation:trail .9s ease-out forwards}
+@keyframes trail{0%{opacity:.9;transform:translate(var(--x),var(--y))}100%{opacity:0;transform:translate(var(--x),calc(var(--y) + 40px)) scale(.3) rotate(90deg)}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px) scale(.9);background:var(--b3);color:var(--ink);font-weight:700;padding:12px 20px;border-radius:999px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--b2);opacity:0;pointer-events:none;transition:.35s var(--spring);z-index:80;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){.toast{bottom:calc(88px + env(safe-area-inset-bottom,0px))}}
+
+/* reveal: springy pop (placed last so it wins over card transitions) */
+.reveal{opacity:0;transform:translateY(36px) scale(.92) rotate(-1.2deg);transition:opacity .5s ease var(--d,0ms),transform .8s var(--spring) var(--d,0ms)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.w,.sticker,.mobile-cta,.fx{animation:none}.hero-visual{transform:none}}
+</style>
+<style>
+.sh-row{max-width:none;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}.sh-row>div{max-width:720px}
+.filter-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.cat-grid{display:flex;flex-wrap:wrap;gap:8px;margin:0;flex:1}
+.cat{flex-direction:row;align-items:center;gap:8px;padding:8px 16px;border-radius:999px}.cat::before{display:none}.cat .ci{font-size:1rem}.cat small{opacity:.6}
+.psearch{display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(--surface);border:1px solid var(--border)}.psearch input{background:none;border:0;outline:0;min-width:200px}
+.create-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:40px;align-items:start}
+@media(max-width:900px){.create-grid{grid-template-columns:1fr}}
+.form-head{padding:22px 22px 0}.form-head h3{margin:4px 0}.form-head b{font-size:.8rem;letter-spacing:.14em;color:var(--muted)}
+.form-grid textarea,.form-grid input[type=text],.form-grid input[type=url]{width:100%;padding:11px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--text);font:inherit}
+.formula-wrap{margin-top:22px}.formula-wrap summary{cursor:pointer;font-weight:600;color:var(--muted);margin-bottom:14px}
+.cmp-btns{display:flex;gap:10px;flex-wrap:wrap}.cmp-dyn{margin-top:32px}.cmp-dyn[hidden]{display:none}
+.route-pill{position:absolute;left:50%;top:-6px;transform:translateX(-50%);padding:6px 16px;border-radius:999px;background:var(--surface2);border:1px solid var(--border);font-weight:700;letter-spacing:.14em;font-size:.8rem;z-index:5;white-space:nowrap}
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(6,5,14,.72);backdrop-filter:blur(8px)}.modal[hidden]{display:none}
+.modal-card{position:relative;width:min(440px,100%);max-height:92vh;overflow:auto;padding:30px;border-radius:24px;background:var(--bg2);border:1px solid var(--border);display:grid;gap:12px}.modal-card.center{text-align:center;justify-items:center}
+.modal-card form{display:grid;gap:12px}.modal-card label{display:grid;gap:6px;font-size:.9rem;color:var(--muted)}
+.modal-card input,.modal-card select{padding:11px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--border);color:var(--text)}
+.modal-x{position:absolute;top:12px;right:14px;background:none;border:0;font-size:1.6rem}.or{text-align:center;color:var(--muted);font-size:.85rem}
+.mchecks{list-style:none;display:grid;gap:6px;color:var(--good)}.mchecks li{opacity:0;animation:fadeUp .5s forwards}.mchecks li:nth-child(2){animation-delay:.5s}.mchecks li:nth-child(3){animation-delay:1s}
+</style>
+<style id="friendly-theme">
+/* ===== GIAO DIỆN SÁNG "PASTEL POP" + TAB ===== */
+:root{color-scheme:light;--bg:#F7F3FF;--bg2:#EEE8FF;--surface:#fff;--surface2:#F1ECFF;--border:rgba(35,26,77,.14);--text:#231A4D;--ink:#231A4D;--muted:#5F5788;--b1:#5B3FF5;--b2:#FF4D94;--b3:#FFD23F;--b2d:#D6246E;--good:#0B8F68;--warn:#B45309;--bad:#D6285A}
+body{background:radial-gradient(900px 520px at 90% -8%,rgba(255,77,148,.14),transparent 60%),radial-gradient(800px 560px at -8% 24%,rgba(91,63,245,.12),transparent 60%),var(--bg)}
+:focus-visible{outline:3px solid var(--b1)}::placeholder{color:#8F87B5}
+/* tab */
+.tab-panel[hidden]{display:none!important}
+.tab-panel:not([hidden]){animation:tabIn .3s ease}@keyframes tabIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section.tab-panel{padding:112px 0 72px}#how{padding-bottom:40px}#choice{padding-top:16px}.section-flush.tab-panel{padding:0 0 80px}
+.section-alt{background:none;border:0}
+body[data-view=create] .mobile-cta{display:none}
+/* navbar */
+.navbar,.navbar.scrolled{background:rgba(247,243,255,.92);backdrop-filter:blur(14px);border-bottom:2px solid var(--border)}
+.brand b{color:var(--b2d)}
+.nav-links a:not(.btn){color:var(--text);font-weight:600}
+.nav-links a:not(.btn):hover{background:var(--b3);color:var(--ink)}
+.nav-links a[aria-current=page]:not(.btn),.nav-links a[aria-current=page]:not(.btn):hover{background:var(--ink);color:#fff;transform:none}
+@media(max-width:1060px){.nav-links a:not(.btn){padding:8px 10px;font-size:.9rem}}
+@media(max-width:980px){.burger{display:flex}.nav-links{position:absolute;top:68px;left:12px;right:12px;flex-direction:column;align-items:stretch;background:#fff;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--b2);border-radius:18px;padding:12px;opacity:0;pointer-events:none;transform:translateY(-8px);transition:.25s}.nav-links.open{opacity:1;pointer-events:auto;transform:none}.nav-links a:not(.btn){padding:12px 14px;font-size:1rem}.nav-cta{margin:6px 0 0}}
+/* hero */
+.blob{opacity:.28}.blob-3{opacity:.3}
+.pill{border:2px solid var(--ink);background:#fff;box-shadow:3px 3px 0 var(--b3)}.eyebrow-up{color:var(--text)}
+.hero-visual .pcard{padding:14px;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.float-chip{background:#fff;border:2px solid var(--ink);color:var(--text);box-shadow:3px 3px 0 var(--b2)}
+.route-pill{background:var(--b3);color:var(--ink);border:2px solid var(--ink)}
+.hero-steps i{color:var(--b2d)}
+/* nút & chip */
+.btn-primary{background:var(--b1);color:#fff;border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn.btn-primary:hover:not(:disabled){box-shadow:7px 7px 0 var(--ink)}.btn.btn-primary:active:not(:disabled){box-shadow:1px 1px 0 var(--ink)}
+.btn-ghost{background:#fff;color:var(--text);border-color:var(--ink);box-shadow:3px 3px 0 rgba(35,26,77,.16)}
+.btn-ghost:hover{background:var(--b3);border-color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.chip{background:#fff;border:2px solid var(--border);color:var(--text)}.chip:hover:not(:disabled){background:var(--surface2);border-color:var(--b1)}
+.chip.on{background:var(--b1);color:#fff;border-color:var(--ink)}
+/* thẻ */
+.card:hover,.flow li:hover,.cat:hover,.option:hover,article.pcard:hover{border-color:var(--ink)}
+.cat:hover{background:var(--surface2)}
+.cat[aria-pressed=true]{border-color:var(--ink);background:hsl(var(--h) 90% 90%);box-shadow:3px 3px 0 hsl(var(--h) 75% 55%)}
+.pcard .pr{color:var(--text)}
+.flow-n{background:var(--b1);color:#fff}.flow small,.op-method,.sb em,.formula-box em{color:var(--b1)}
+.tag{background:rgba(91,63,245,.12);color:#4B2FD6}.tag-alt{background:rgba(255,210,63,.35);color:var(--ink)}
+.formula-box code{color:#C2185B}
+.avatar{color:var(--ink);background:var(--b3)}
+.tgrid .tcard:nth-child(5n+2) .avatar{background:#FF9EC4}.tgrid .tcard:nth-child(5n+3) .avatar{background:#B8A6FF}.tgrid .tcard:nth-child(5n+4) .avatar{background:#9BE7C9}.tgrid .tcard:nth-child(5n+5) .avatar{background:#8FD3FF}
+.badge,.verified,.vf{background:rgba(11,143,104,.12)}.vf.no{background:rgba(180,83,9,.12)}
+/* form */
+.type-card,.seg label,select,input[type=number]{background:#fff;color:var(--text)}
+.type-card,.seg label{border:2px solid var(--border)}
+.type-card:hover{border-color:var(--b1)}
+.type-card:has(input:checked){border-color:var(--b1);background:rgba(91,63,245,.08);box-shadow:3px 3px 0 var(--b1)}
+.seg label:has(input:checked){background:var(--b1);color:#fff;border-color:var(--ink);box-shadow:3px 3px 0 var(--ink);transform:none}
+.type-card:has(input:focus-visible),.seg label:has(input:focus-visible){outline:3px solid var(--b1);outline-offset:2px}
+select option{background:#fff;color:var(--text)}
+.psearch{background:#fff;border:2px solid var(--border)}.psearch:focus-within{border-color:var(--b1)}
+.form-grid input:focus,.form-grid textarea:focus,.trk-form input:focus,.modal-card input:focus,select:focus,input[type=number]:focus{border-color:var(--b1);box-shadow:0 0 0 3px rgba(91,63,245,.2);outline:none}
+/* demo, so sánh, theo dõi */
+.demo-shell{background:#fff;border:2px solid var(--ink);box-shadow:8px 8px 0 var(--b2)}
+.order-summary,.track-head>div,.evidence,.rejected,.formula-box,.subs li,th{background:var(--surface2)}
+.cmp thead th{text-transform:none;font-size:1rem;color:var(--text);letter-spacing:0}
+.match-card.top{border-color:var(--b1);box-shadow:5px 5px 0 var(--b2)}
+.option.sel,.option.sel:hover{border-color:var(--b1);box-shadow:5px 5px 0 var(--b1)}.option.sel::after{background:var(--b1);color:#fff}
+.scan-ring{border-top-color:var(--b1);border-right-color:var(--b2)}
+.timeline li.done .tl-dot,.tl .ok .ic{background:var(--good);color:#fff}.timeline li.cur .tl-dot{background:var(--b1)}
+.done-box{border-color:var(--good);background:rgba(11,143,104,.1)}
+.modal{background:rgba(35,26,77,.55)}.modal-card{background:#fff;border:2px solid var(--ink);box-shadow:8px 8px 0 var(--b2)}.modal-x{color:var(--text)}
+/* dải CTA & chân trang */
+.cta-band{background:var(--b1);color:#fff;border:2px solid var(--ink);box-shadow:8px 8px 0 var(--b3)}
+.cta-band h2{color:#fff}.cta-band .muted{color:rgba(255,255,255,.9);font-weight:500}
+.cta-band .btn-primary{background:var(--b3);color:var(--ink)}
+.footer{background:var(--ink);color:#fff;border-top:0}.footer .brand,.footer .brand b{color:#fff}.footer .brand b{color:var(--b3)}
+.footer-inner p,.footer-note p,.footer nav a{color:rgba(255,255,255,.75)}.footer nav a:hover{color:#fff}.footer-note{border-top-color:rgba(255,255,255,.16)}
+</style>
+<style id="product-art-contrast">
+/* CROWDSHIP — Exclusive product-catalog illustration and contrast refinements.
+   Scoped to #products; does not change site-wide styling or existing layout. */
+#products .cat .ci{display:inline-flex;align-items:center;justify-content:center;flex:none;line-height:1}
+#products .cat .ci svg.prod-art{width:22px;height:22px;display:block;filter:none}
+#products .cat b{color:#24143f;font-weight:800;letter-spacing:-.01em}
+#products .cat small{color:#54466f;opacity:1;font-weight:650}
+#products .cat[aria-pressed=true] b{color:#201238}
+#products .cat-detail h3{display:flex;align-items:center;gap:9px;color:#1f123b;font-weight:800}
+#products .cat-detail h3 .prod-art{width:38px;height:38px;flex:none;filter:none}
+#products .cat-detail p,#products .cat-detail li{color:#45395e}
+#products .cat-detail .small.muted{color:#5a4c72}
+#products article.pcard{height:auto;min-height:290px} /* retain card dimensions where possible; don't crop long product names or CTAs */
+#products article.pcard .ph{isolation:isolate}
+#products article.pcard .ph::before{content:'';position:absolute;width:108px;height:108px;border-radius:50%;background:rgba(255,255,255,.25);filter:blur(20px);z-index:-1}
+#products article.pcard .ph .prod-art{width:116px;height:116px;max-height:calc(100% - 12px);display:block;filter:drop-shadow(0 7px 8px rgba(34,15,75,.23));transition:transform .24s ease}
+#products article.pcard:hover .ph .prod-art{transform:translateY(-3px) rotate(-3deg) scale(1.035)}
+/* Product titles were white on an almost-white card body, making them unreadable. */
+#products article.pcard .pb{color:#21153d}
+#products article.pcard .pb h4{color:#21143d;font-family:var(--font);font-size:1.02rem;line-height:1.34;letter-spacing:-.01em;font-weight:800;text-shadow:none}
+#products article.pcard .pb > small.muted{color:#51436f;font-weight:650}
+#products article.pcard .pb .pr{color:#251347;font-weight:800}
+#products article.pcard .pb .pr small.muted{color:#5c4c79;font-weight:650}
+#products .section-head h2{color:#251647;font-weight:800}
+#products .section-head .lead{color:#554770;font-weight:550}
+#products .psearch input{color:#251647}
+#products .psearch input::placeholder{color:#65557f;opacity:1}
+@media(prefers-reduced-motion:reduce){#products article.pcard:hover .ph .prod-art{transform:none}}
+</style>
+</head>
+<body id="top">
+
+<!-- ============ NAVBAR ============ -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" width="24" height="24"><path d="M14 36L50 16L40 50L30 38Z" fill="#fff"/></svg></span><span>CROWD<b>SHIP</b></span></a>
+    <nav class="nav-links" id="navlinks" aria-label="Điều hướng chính">
+      <a href="#home" data-nav="home">Trang chủ</a><a href="#products" data-nav="products">Khám phá</a><a href="#how" data-nav="how">Cách hoạt động</a><a href="#travelers" data-nav="travelers">Người mua hộ</a><a href="#compare" data-nav="compare">So sánh</a><a href="#tracking" data-nav="tracking">Theo dõi</a>
+      <a href="#" id="loginBtn" data-login="" class="btn btn-sm btn-ghost nav-cta">Đăng nhập</a><a href="#create" data-nav="create" class="btn btn-sm btn-primary">Tạo yêu cầu ↗</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Mở menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+
+<section class="hero tab-panel" id="home" data-tab="home">
+  <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="grid-bg"></div>
+  <div class="container hero-inner">
+    <div>
+      <span class="pill fade-up"><i class="dot"></i> <span class="eyebrow-up">Kết nối Hàn Quốc — Việt Nam</span></span>
+      <h1 class="fade-up" style="--d:100ms">Săn đồ K-pop Hàn,<br><span class="grad-text">về tận tay bạn.</span></h1>
+      <p class="hero-sub fade-up" style="--d:220ms">Những món đồ bạn yêu thích ở Hàn Quốc, nay gần hơn bao giờ hết. Tìm người mua hộ đáng tin, theo dõi từng bước và an tâm nhận hàng.</p>
+      <div class="hero-cta fade-up" style="--d:340ms"><a href="#create" class="btn btn-primary btn-lg">Tạo yêu cầu mua hộ ↗</a><a href="#products" class="btn btn-ghost btn-lg">Khám phá sản phẩm</a></div>
+      <ul class="hero-steps fade-up" style="--d:460ms"><li><i>01</i><b>Tìm đúng món bạn muốn</b>Photocard đến merch giới hạn</li><li><i>02</i><b>Ghép đúng người mua hộ</b>Điểm phù hợp, lịch trình rõ</li><li><i>03</i><b>Theo dõi trọn hành trình</b>Bằng chứng mua và tem niêm phong</li></ul>
+    </div>
+    <div class="hero-visual" id="heroVisual" aria-hidden="true"></div>
+    <div class="sticker" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="cp" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><text><textPath href="#cp" textLength="270" lengthAdjust="spacing">KHÔNG FLOP ✦ MUA HỘ XỊN ✦ </textPath></text></svg></div>
+  </div>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+</section>
+
+<section class="section tab-panel" id="products" data-tab="products" hidden><div class="container">
+  <div class="section-head sh-row reveal"><div><span class="eyebrow">The little things you love</span><h2>Tìm món bạn thương.</h2><p class="lead">Một góc nhỏ cho những món quà Hàn Quốc đáng để chờ.</p></div><a href="#create" class="btn btn-ghost">Gửi yêu cầu riêng ↗</a></div>
+  <div class="filter-row"><div class="cat-grid" id="catGrid"></div><label class="psearch">⌕<input id="pSearch" placeholder="Tìm sản phẩm, nhóm nhạc…" aria-label="Tìm sản phẩm"></label></div>
+  <p class="note">✳ Sản phẩm và mức giá bên dưới là dữ liệu minh họa, không xác nhận hàng sẵn có.</p>
+  <div class="cat-detail" id="catDetail" hidden></div>
+  <div class="pgrid" id="pgrid"></div>
+  <p class="cat-exclude">Giai đoạn đầu chưa nhận thuốc, thực phẩm bổ sung, mỹ phẩm và hàng cần giấy phép chuyên ngành.</p>
+</div></section>
+
+<section class="section section-alt tab-panel" id="how" data-tab="how" hidden><div class="container">
+  <div class="section-head reveal"><span class="eyebrow">A little journey, made simple</span><h2>Từ “muốn có” đến đang trên đường.</h2><p class="lead">Biết ai đang mua, món hàng ở đâu và điều gì sẽ diễn ra tiếp theo.</p></div>
+  <ol class="flow" id="flow"></ol>
+</div></section>
+
+<section class="section tab-panel" id="choice" data-tab="how" hidden><div class="container">
+  <div class="section-head reveal"><span class="eyebrow">Your choice, your journey</span><h2>Mỗi món đồ, một cách trở về.</h2><p class="lead">Chuyến đi phù hợp hay vận chuyển thông thường? Bạn có thể xem cả hai, cân nhắc chi phí và thời gian dự kiến rồi tự chọn.</p></div>
+  <div class="hybrid">
+    <div class="card hybrid-card is-traveler reveal"><span class="tag">Ưu tiên</span><h3>🧳 Người mua hộ mang về</h3><p class="when">Có người mang hàng đáp ứng đủ tiêu chí</p><ul><li>Lịch trình, điểm mua/nhận, phí, khả năng nhận</li><li>Xác nhận từng mốc kèm bằng chứng</li><li>Khách xác nhận trước khi thực hiện</li></ul></div>
+    <div class="hybrid-or" aria-hidden="true">hoặc</div>
+    <div class="card hybrid-card is-standard reveal" style="--d:120ms"><span class="tag tag-alt">Thay thế</span><h3>📦 Vận chuyển thông thường</h3><p class="when">Không có người phù hợp hoặc khách chủ động chọn</p><ul><li>Đơn vị vận chuyển, tuyến, phí, thời gian, điều kiện</li><li>Mã vận đơn và trạng thái nếu tích hợp</li><li>Khách xác nhận trước khi chuyển phương thức</li></ul></div>
+  </div>
+  <p class="mt-l"><a href="#compare" class="btn btn-primary">So sánh phương án ↗</a> <span class="muted small">Báo giá và thời gian trên bản demo chỉ mang tính minh họa.</span></p>
+  <details class="formula-wrap">
+<summary>Cơ chế ghép đơn (Rule-based Matching)</summary>
+  <div class="card formula reveal">
+    <div><h3>Cơ chế ghép đơn (Rule-based Matching)</h3><p>Hệ thống loại phương án không đạt điều kiện bắt buộc (sai tuyến, không kịp hạn, không đến được điểm mua, vượt sức chứa, loại hàng không nhận), sau đó xếp hạng phần còn lại. Trọng số là giả định cần hiệu chỉnh qua thử nghiệm; giai đoạn đầu có nhân sự duyệt và chưa dùng AI.</p></div>
+    <div class="formula-box"><code>S = 0,35·T + 0,30·L + 0,20·D + 0,15·C</code><ul><li><b>T</b> Thời gian <em>35%</em></li><li><b>L</b> Địa điểm <em>30%</em></li><li><b>D</b> Khả năng nhận <em>20%</em></li><li><b>C</b> Chi phí <em>15%</em></li></ul></div>
+  </div>
+  </details>
+</div></section>
+
+<section class="section section-alt tab-panel" id="travelers" data-tab="travelers" hidden><div class="container">
+  <div class="section-head reveal"><span class="eyebrow">People already on the way</span><h2>Chuyến đi nào cũng bắt đầu từ ai đó.</h2><p class="lead">Hồ sơ người mua hộ mẫu, thông tin cá nhân được giữ riêng tư.</p></div>
+  <div class="tgrid" id="tgrid"></div>
+  <p class="mt-l"><a href="#" data-login="traveler" class="btn btn-ghost">Đăng ký làm người mua hộ ↗</a></p>
+</div></section>
+
+<section class="section tab-panel" id="create" data-tab="create" hidden><div class="container create-grid">
+  <div class="create-intro reveal"><span class="eyebrow">Your request, your way</span><h2>Hãy nói chúng mình món bạn đang tìm.</h2><p class="lead">Thêm thông tin càng rõ, chúng mình càng dễ tìm đúng người và đúng món. Mọi khoản phí được hiển thị trước khi bạn chọn phương án.</p><p class="note">✳ Chỉ nhận sản phẩm K-pop hợp lệ, không tiếp nhận hàng giả hoặc hàng hạn chế.</p></div>
+  <div class="demo-shell reveal"><div class="demo-panel" id="panel"></div></div>
+</div></section>
+
+<section class="section section-alt tab-panel" id="compare" data-tab="compare" hidden><div class="container">
+  <div class="section-head reveal"><span class="eyebrow">Transparent by design</span><h2>Hai cách về nhà. Bạn chọn nhé.</h2><p class="lead">Chi phí và thời gian minh họa để bạn hình dung các tiêu chí khác nhau.</p></div>
+  <div class="card reveal" style="overflow-x:auto"><table class="cmp"><thead><tr><th></th><th>✈ Người mua hộ</th><th>▣ Vận chuyển thường</th></tr></thead><tbody>
+  <tr><td>Chi phí tham khảo</td><td>120.000 ₫ <small class="muted">ước tính</small></td><td>160.000 ₫ <small class="muted">ước tính</small></td></tr>
+  <tr><td>Thời gian tham khảo</td><td>2–3 ngày</td><td>5–7 ngày làm việc</td></tr>
+  <tr><td>Bằng chứng</td><td>Ảnh mua · Ảnh hàng · Tem</td><td>Hóa đơn · Mã vận đơn nếu có</td></tr>
+  <tr><td>Phù hợp khi</td><td>Có lịch trình tương thích</td><td>Chưa có người phù hợp</td></tr></tbody></table></div>
+  <p class="note">Giá, lịch trình và thời gian ở đây là dữ liệu mô phỏng, không phải báo giá hoặc cam kết vận chuyển thực tế.</p>
+  <p class="cmp-btns"><a href="#create" data-pickm="traveler" class="btn btn-primary">Chọn người mua hộ ↗</a> <a href="#create" data-pickm="standard" class="btn btn-ghost">Chọn vận chuyển thường ↗</a></p>
+  <div class="cmp-dyn card" id="cmpDyn" hidden></div>
+</div></section>
+
+<section class="section tab-panel" id="tracking" data-tab="tracking" hidden><div class="container">
+  <div class="section-head reveal"><span class="eyebrow">A little update goes a long way</span><h2>Món đồ của bạn đang đến đâu rồi?</h2><p class="lead">Nhập mã đơn để xem tiến trình, tem niêm phong và hồ sơ bằng chứng được chia sẻ.</p></div>
+  <form class="trk-form" id="trkForm"><input id="trkIn" placeholder="Thử mã demo: CS-2026-1042" aria-label="Mã đơn"><button class="btn btn-primary" type="submit">Tra cứu ↗</button></form>
+  <div class="card" id="trkOut"></div>
+  <div class="card" id="trkLive" hidden style="margin-top:18px"></div>
+</div></section>
+
+<section class="section section-flush tab-panel" data-tab="home"><div class="container"><div class="cta-band reveal"><span class="eyebrow">A little closer, every day</span><h2>Món yêu thích của bạn đang ở một chuyến đi.</h2><p class="muted">Gửi yêu cầu đầu tiên. Chúng mình sẽ giúp bạn tìm bước tiếp theo.</p><a href="#create" class="btn btn-primary btn-lg">Tìm món của mình ↗</a></div></div></section>
+
+</main>
+
+<a href="#create" class="btn btn-primary mobile-cta">Tạo yêu cầu mua hộ ↗</a>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div><a href="#top" class="brand"><span>CROWD<b>SHIP</b></span></a><p>Nơi những món đồ bạn yêu tìm được đường về nhà.</p></div>
+    <nav aria-label="Liên kết chân trang"><a href="#how">Cách hoạt động</a><a href="#tracking">Theo dõi đơn</a><a href="#create">Điều khoản sử dụng</a><a href="#create">Chính sách quyền riêng tư</a></nav>
+  </div>
+  <div class="container footer-note"><p>© 2026 CROWDSHIP · HÀN QUỐC → VIỆT NAM. CROWDSHIP kết nối người mua với người mua hộ và đơn vị vận chuyển, không phải bên bán hàng. Giá, lịch trình và người dùng trong trang này là dữ liệu giả lập, chưa có giao dịch hay thanh toán thật. Tên nhóm nhạc và album thuộc về chủ sở hữu tương ứng.</p></div>
+</footer>
+
+<script>
+/* =========================================================
+   A. DỮ LIỆU (nghệ sĩ K-pop có thật; người mua hộ và đối tác chỉ là dữ liệu minh họa)
+   ========================================================= */
+const GROUPS=[{"id":"bts","name":"BTS","members":["RM","Jin","SUGA","j-hope","Jimin","V","Jung Kook","Tất cả thành viên"],"albums":["ARIRANG","Proof","MAP OF THE SOUL : 7"]},{"id":"blackpink","name":"BLACKPINK","members":["JISOO","JENNIE","ROSÉ","LISA","Tất cả thành viên"],"albums":["DEADLINE","BORN PINK","THE ALBUM"]},{"id":"twice","name":"TWICE","members":["Nayeon","Jeongyeon","Momo","Sana","Jihyo","Mina","Dahyun","Chaeyoung","Tzuyu","Tất cả thành viên"],"albums":["THIS IS FOR","STRATEGY","READY TO BE"]},{"id":"straykids","name":"Stray Kids","members":["Bang Chan","Lee Know","Changbin","Hyunjin","HAN","Felix","Seungmin","I.N","Tất cả thành viên"],"albums":["KARMA","DO IT","ATE"]},{"id":"seventeen","name":"SEVENTEEN","members":["S.Coups","Jeonghan","Joshua","Jun","Hoshi","Wonwoo","Woozi","DK","Mingyu","The8","Seungkwan","Vernon","Dino","Tất cả thành viên"],"albums":["HAPPY BURSTDAY","17 IS RIGHT HERE","FML"]},{"id":"exo","name":"EXO","members":["Xiumin","Suho","Lay","Baekhyun","Chen","Chanyeol","D.O.","Kai","Sehun","Tất cả thành viên"],"albums":["REVERXE","EXIST","DON’T FIGHT THE FEELING"]},{"id":"txt","name":"TXT (TOMORROW X TOGETHER)","members":["Soobin","Yeonjun","Beomgyu","Taehyun","Huening Kai","Tất cả thành viên"],"albums":["The Star Chapter: TOGETHER","minisode 3: TOMORROW","The Name Chapter: FREEFALL"]},{"id":"enhypen","name":"ENHYPEN","members":["Jungwon","Heeseung","Jay","Jake","Sunghoon","Sunoo","Ni-ki","Tất cả thành viên"],"albums":["THE SIN : VANISH","DESIRE : UNLEASH","ROMANCE : UNTOLD"]},{"id":"ateez","name":"ATEEZ","members":["Hongjoong","Seonghwa","Yunho","Yeosang","San","Mingi","Wooyoung","Jongho","Tất cả thành viên"],"albums":["GOLDEN HOUR : Part.2","THE WORLD EP.FIN : WILL"]},{"id":"aespa","name":"aespa","members":["Karina","Giselle","Winter","Ningning","Tất cả thành viên"],"albums":["Rich Man","Armageddon","Whiplash"]},{"id":"ive","name":"IVE","members":["Yujin","Gaeul","Rei","Wonyoung","Liz","Leeseo","Tất cả thành viên"],"albums":["IVE EMPATHY","IVE SWITCH","I’VE MINE"]},{"id":"lesserafim","name":"LE SSERAFIM","members":["Sakura","Chaewon","Yunjin","Kazuha","Eunchae","Tất cả thành viên"],"albums":["HOT","CRAZY","EASY"]},{"id":"itzy","name":"ITZY","members":["Yeji","Lia","Ryujin","Chaeryeong","Yuna","Tất cả thành viên"],"albums":["TUNNEL VISION","GOLD","BORN TO BE"]},{"id":"idle","name":"i-dle","members":["Miyeon","Minnie","Soyeon","Yuqi","Shuhua","Tất cả thành viên"],"albums":["I SWAY","2","I feel"]},{"id":"redvelvet","name":"Red Velvet","members":["Irene","Seulgi","Wendy","Joy","Yeri","Tất cả thành viên"],"albums":["Cosmic","Chill Kill","The ReVe Festival 2022 – Feel My Rhythm"]},{"id":"nct127","name":"NCT 127","members":["Taeyong","Johnny","Yuta","Doyoung","Jaehyun","Jungwoo","Mark","Haechan","Tất cả thành viên"],"albums":["WALK","Fact Check","2 Baddies"]},{"id":"nctdream","name":"NCT DREAM","members":["Mark","Renjun","Jeno","Haechan","Jaemin","Chenle","Jisung","Tất cả thành viên"],"albums":["DREAMSCAPE","ISTJ","Beat It Up"]},{"id":"nctwish","name":"NCT WISH","members":["Sion","Riku","Yushi","Jaehee","Ryo","Sakuya","Tất cả thành viên"],"albums":["COLOR","poppop"]},{"id":"riize","name":"RIIZE","members":["Shotaro","Eunseok","Sungchan","Wonbin","Sohee","Anton","Tất cả thành viên"],"albums":["ODYSSEY","RIIZING"]},{"id":"tws","name":"TWS","members":["Shinyu","Dohoon","Youngjae","Hanjin","Jihoon","Kyungmin","Tất cả thành viên"],"albums":["SUMMER BEAT!","Sparkling Blue"]},{"id":"boynextdoor","name":"BOYNEXTDOOR","members":["Sungho","Riwoo","Jaehyun","Taesan","Leehan","Woonhak","Tất cả thành viên"],"albums":["No Genre","19.99","HOW?"]},{"id":"zerobaseone","name":"ZEROBASEONE","members":["Sung Hanbin","Kim Jiwoong","Zhang Hao","Seok Matthew","Kim Taerae","Ricky","Kim Gyuvin","Park Gunwook","Han Yujin","Tất cả thành viên"],"albums":["NEVER SAY NEVER","BLUE PARADISE","MELTING POINT"]},{"id":"treasure","name":"TREASURE","members":["Choi Hyunsuk","Jihoon","Yoshi","Junkyu","Yoon Jaehyuk","Asahi","Doyoung","Haruto","Park Jeongwoo","So Junghwan","Tất cả thành viên"],"albums":["REBOOT","THE SECOND STEP : CHAPTER TWO"]},{"id":"shinee","name":"SHINee","members":["Onew","Key","Minho","Taemin","Tất cả thành viên"],"albums":["HARD","Don’t Call Me"]},{"id":"superjunior","name":"Super Junior","members":["Leeteuk","Heechul","Yesung","Shindong","Eunhyuk","Donghae","Siwon","Ryeowook","Kyuhyun","Tất cả thành viên"],"albums":["The Renaissance","The Road : Celebration"]},{"id":"snsd","name":"Girls’ Generation (SNSD)","members":["Taeyeon","Sunny","Tiffany","Hyoyeon","Yuri","Sooyoung","Yoona","Seohyun","Tất cả thành viên"],"albums":["FOREVER 1","Holiday Night"]},{"id":"bigbang","name":"BIGBANG","members":["G-DRAGON","Taeyang","Daesung","Tất cả thành viên"],"albums":["MADE","Still Alive"]},{"id":"2ne1","name":"2NE1","members":["CL","Bom","Dara","Minzy","Tất cả thành viên"],"albums":["CRUSH","TO ANYONE"]},{"id":"kara","name":"KARA","members":["Gyuri","Seungyeon","Nicole","Jiyoung","Youngji","Tất cả thành viên"],"albums":["MOVE AGAIN","Full Bloom"]},{"id":"mamamoo","name":"MAMAMOO","members":["Solar","Moonbyul","Wheein","Hwasa","Tất cả thành viên"],"albums":["MIC ON","reality in BLACK"]},{"id":"dreamcatcher","name":"Dreamcatcher","members":["JiU","SuA","Siyeon","Handong","Yoohyeon","Dami","Gahyun","Tất cả thành viên"],"albums":["VirtuouS","Apocalypse : From us"]},{"id":"stayc","name":"STAYC","members":["Sumin","Sieun","Isa","Seeun","Yoon","J","Tất cả thành viên"],"albums":["Metamorphic","Teddy Bear"]},{"id":"kissoflife","name":"KISS OF LIFE","members":["Julie","Natty","Belle","Haneul","Tất cả thành viên"],"albums":["Lose Yourself","Midas Touch"]},{"id":"babymonster","name":"BABYMONSTER","members":["Ruka","Pharita","Asa","Ahyeon","Rami","Rora","Chiquita","Tất cả thành viên"],"albums":["DRIP","BABYMONS7ER"]},{"id":"illit","name":"ILLIT","members":["Yunah","Minju","Moka","Wonhee","Iroha","Tất cả thành viên"],"albums":["I’LL LIKE YOU","SUPER REAL ME","NOT CUTE ANYMORE"]},{"id":"hearts2hearts","name":"Hearts2Hearts","members":["Carmen","Jiwoo","Yuha","Stella","Juun","A-na","Ian","Ye-on","Tất cả thành viên"],"albums":["The Chase"]},{"id":"meovv","name":"MEOVV","members":["Sooin","Gawon","Anna","Narin","Ella","Tất cả thành viên"],"albums":["MY EYES OPEN VVIDE"]},{"id":"p1harmony","name":"P1Harmony","members":["Keeho","Theo","Jiung","Intak","Soul","Jongseob","Tất cả thành viên"],"albums":["SAD SONG","DUH!"]},{"id":"cravity","name":"CRAVITY","members":["Serim","Allen","Jungmo","Woobin","Wonjin","Minhee","Hyeongjun","Taeyoung","Seongmin","Tất cả thành viên"],"albums":["EVERSHINE","FIND THE ORBIT"]},{"id":"day6","name":"DAY6","members":["Sungjin","Young K","Wonpil","Dowoon","Tất cả thành viên"],"albums":["Band Aid","Fourever"]},{"id":"xdinaryheroes","name":"Xdinary Heroes","members":["Gunil","Jungsu","Gaon","O.de","Jun Han","Jooyeon","Tất cả thành viên"],"albums":["Troubleshooting","Live and Fall"]},{"id":"nmixx","name":"NMIXX","members":["Lily","Haewon","Sullyoon","Bae","Jiwoo","Kyujin","Tất cả thành viên"],"albums":["Fe3O4: BREAK","Fe3O4: STICK OUT","Blue Valentine"]},{"id":"kep1er","name":"Kep1er","members":["Yujin","Xiaoting","Chaehyun","Dayeon","Hikaru","Huening Bahiyyih","Youngeun","Tất cả thành viên"],"albums":["Kep1going On","TIPI-TAP"]},{"id":"triples","name":"tripleS","members":["SeoYeon","HyeRin","JiWoo","ChaeYeon","YooYeon","SooMin","NaKyoung","YuBin","Kaede","DaHyun","Kotone","YeonJi","Nien","SoHyun","Xinyu","Mayu","Lynn","JooBin","HaYeon","ShiOn","ChaeWon","Sullin","SeoAh","JiYeon","Tất cả thành viên"],"albums":["ASSEMBLE24","ASSEMBLE25"]},{"id":"fromis9","name":"fromis_9","members":["Saerom","Hayoung","Jiwon","Jisun","Seoyeon","Chaeyoung","Nagyung","Jiheon","Tất cả thành viên"],"albums":["Supersonic","Unlock My World"]},{"id":"akmu","name":"AKMU","members":["Lee Chanhyuk","Lee Suhyun","Tất cả thành viên"],"albums":["LOVE EPISODE","SAILING"]},{"id":"iu","name":"IU","members":["IU"],"albums":["The Winning","LILAC"]},{"id":"taeyeon","name":"TAEYEON","members":["Taeyeon"],"albums":["To. X","INVU"]},{"id":"gdragon","name":"G-DRAGON","members":["G-DRAGON"],"albums":["Übermensch","COUP D’ETAT"]},{"id":"jennie","name":"JENNIE","members":["JENNIE"],"albums":["Ruby","You & Me"]},{"id":"rose","name":"ROSÉ","members":["ROSÉ"],"albums":["rosie","R"]},{"id":"lisa","name":"LISA","members":["LISA"],"albums":["Alter Ego","LALISA"]},{"id":"jisoo","name":"JISOO","members":["JISOO"],"albums":["AMORTAGE","ME"]},{"id":"chungha","name":"CHUNG HA","members":["CHUNG HA"],"albums":["Querencia","EENIE MEENIE"]},{"id":"somI","name":"JEON SOMI","members":["JEON SOMI"],"albums":["GAME PLAN","XOXO"]}];
+const VERSIONS=['Ver. A','Ver. B','Ver. Limited','POB Store Exclusive'];
+const STORES=[{id:'hongdae',name:'Hongdae',city:'Seoul'},{id:'gangnam',name:'Gangnam',city:'Seoul'},{id:'seongsu',name:'Seongsu',city:'Seoul'},{id:'myeongdong',name:'Myeongdong',city:'Seoul'},{id:'seomyeon',name:'Seomyeon',city:'Busan'}];
+const CATS=[
+ {id:'album',label:'Album',icon:'💿',hue:265,price:450000,w:3,desc:'Album vật lý theo phiên bản, kèm quà đi kèm trong hộp.',subs:['Album đầy đủ','Mini album','Single','Phiên bản giới hạn','Kit album'],note:'Nặng và dễ móp góc nên người mua hộ tính theo sức chứa.'},
+ {id:'photocard',label:'Photocard',icon:'🃏',hue:325,price:120000,w:1,desc:'Thẻ ảnh lẻ hoặc theo set, theo thành viên và phiên bản.',subs:['Photocard theo thành viên','Set photocard','Trading card','Thẻ selfie / instax'],note:'Ghi rõ thành viên và phiên bản để tránh mua sai.'},
+ {id:'pob',label:'POB · quà kèm',icon:'🎁',hue:190,price:250000,w:1,desc:'Quà tặng kèm khi mua tại cửa hàng hoặc sự kiện chỉ định.',subs:['Quà theo cửa hàng','Quà đặt trước','Quà sự kiện'],note:'Phụ thuộc cửa hàng và hạn đặt, không cam kết còn hàng.'},
+ {id:'lightstick',label:'Lightstick',icon:'💡',hue:50,price:900000,w:4,desc:'Gậy cổ vũ chính thức và phụ kiện đi kèm.',subs:['Lightstick chính thức','Dây đeo','Túi đựng','Khung trưng bày'],note:'Thiết bị có pin: chỉ một số người mang và đơn vị vận chuyển nhận.'},
+ {id:'merch',label:'Merch chính thức',icon:'🧸',hue:150,price:380000,w:2,desc:'Đồ lưu niệm chính thức của nhóm.',subs:['Poster','Huy hiệu','Móc khóa','Thú bông','Văn phòng phẩm'],note:'Poster cần ống bảo vệ để không bị nhăn.'},
+ {id:'fashion',label:'Thời trang nhóm',icon:'👕',hue:210,price:650000,w:3,desc:'Áo, hoodie, nón và phụ kiện in logo nhóm.',subs:['Áo thun','Hoodie','Nón','Túi tote','Phụ kiện'],note:'Chọn đúng size. Đổi trả tùy cửa hàng bán.'},
+ {id:'photobook',label:'Photobook & Season’s Greetings',icon:'📖',hue:300,price:550000,w:3,desc:'Photobook, bộ Season’s Greetings, lịch và ấn phẩm theo mùa.',subs:['Season’s Greetings','Photobook','Lịch','Tạp chí'],note:'Bìa cứng khá nặng. Ấn phẩm theo mùa thường chỉ mở bán một lần.'},
+ {id:'event',label:'Hàng concert & pop-up',icon:'🎫',hue:15,price:420000,w:2,desc:'Hàng bán tại concert, fan meeting và pop-up store.',subs:['Concert MD','Fan meeting MD','Pop-up store','Collab theo đợt'],note:'Bán giới hạn theo ngày sự kiện, cần đặt trước ngày mở bán.'}];
+const TYPES=CATS.map(c=>({id:c.id,label:c.label,price:c.price,weight:c.w,icon:c.icon}));
+const DEADLINES=[[45,'Không gấp'],[14,'Trong 2 tuần'],[30,'Trong 1 tháng'],[21,'Ngày cụ thể (trao đổi sau)']];
+const PRESETS=[
+ {label:'BTS · album ARIRANG tại Hongdae',o:{group:'bts',member:'Tất cả thành viên',title:'BTS · ARIRANG',version:'Ver. A',store:'hongdae',type:'album',qty:1,budget:900000,deadlineDays:14}},
+ {label:'BLACKPINK · photocard JENNIE',o:{group:'blackpink',member:'JENNIE',title:'BLACKPINK · Photocard JENNIE (mẫu yêu cầu)',version:'Ver. Limited',store:'gangnam',type:'photocard',qty:2,budget:600000,deadlineDays:14}},
+ {label:'Stray Kids · album KARMA tại Busan',o:{group:'straykids',member:'Tất cả thành viên',title:'Stray Kids · KARMA',version:'Ver. B',store:'seomyeon',type:'album',qty:3,budget:2000000,deadlineDays:14}},
+ {label:'TWICE · lightstick tại Seoul',o:{group:'twice',member:'Tất cả thành viên',title:'TWICE · Lightstick (mẫu yêu cầu)',version:'Ver. A',store:'myeongdong',type:'lightstick',qty:1,budget:1500000,deadlineDays:30}}];
+const TRAVELERS=[
+ {id:'t1',name:'Minh Anh',route:'KR-VN',city:'Seoul',areas:['hongdae','gangnam','seongsu'],accepts:['photocard','pob','album'],capacity:8,rating:4.9,trips:23,verified:true,fee:90000,departDay:4},
+ {id:'t2',name:'Hải Đăng',route:'KR-VN',city:'Seoul',areas:['myeongdong','gangnam'],accepts:['photocard','pob','album','merch'],capacity:10,rating:4.6,trips:11,verified:true,fee:110000,departDay:9},
+ {id:'t3',name:'Thu Hà',route:'KR-VN',city:'Seoul',areas:['hongdae','myeongdong'],accepts:['photocard','pob'],capacity:5,rating:4.7,trips:15,verified:true,fee:70000,departDay:2},
+ {id:'t4',name:'Quốc Bảo',route:'KR-VN',city:'Busan',areas:['seomyeon'],accepts:['photocard','pob','album','merch'],capacity:6,rating:4.3,trips:4,verified:false,fee:80000,departDay:6},
+ {id:'t5',name:'Linh Chi',route:'KR-VN',city:'Seoul',areas:['hongdae','seongsu'],accepts:['photocard','merch'],capacity:3,rating:4.8,trips:9,verified:true,fee:85000,departDay:12},
+ {id:'t6',name:'Tuấn Kiệt',route:'KR-TH',city:'Seoul',areas:['hongdae'],accepts:['photocard','pob','album','merch'],capacity:9,rating:4.5,trips:6,verified:true,fee:60000,departDay:3}];
+const CARRIERS=[
+ {id:'c1',name:'KR-Express',base:140000,perUnit:28000,daysMin:5,daysMax:7,accepts:['photocard','pob','album','merch'],tracking:'Mã vận đơn, cập nhật hằng ngày'},
+ {id:'c2',name:'SeaPost Economy',base:90000,perUnit:20000,daysMin:8,daysMax:12,accepts:['photocard','pob','album'],tracking:'Mã vận đơn, cập nhật theo mốc'},
+ {id:'c3',name:'AirLink Cargo',base:190000,perUnit:34000,daysMin:3,daysMax:5,accepts:['photocard','pob','album','merch'],tracking:'Theo dõi thời gian thực'}];
+const BUY_FEE=60000;
+const NEW=['lightstick','fashion','photobook','event'];
+const EXT={t1:['photobook'],t2:NEW,t3:['event'],t4:NEW,t5:['fashion'],t6:NEW,c1:NEW,c2:['photobook','merch','fashion'],c3:['photobook','event','fashion']};
+[...TRAVELERS,...CARRIERS].forEach(x=>x.accepts=[...x.accepts,...(EXT[x.id]||[])]);
+const FLOW=[['Kể chúng mình nghe','01','Gửi link, ảnh hoặc mô tả món đồ bạn đang tìm.'],['Tìm người phù hợp','02','So sánh lịch trình, khả năng nhận hàng và mức độ phù hợp.'],['Mua & lưu bằng chứng','03','Người mua hộ ghi nhận hóa đơn, tình trạng và tem niêm phong.'],['Đón món đồ về','04','Theo dõi chuyến đi và xác nhận khi món đồ đến tay.']];
+
+/* =========================================================
+   B. LOGIC: ĐỊNH DẠNG, GHÉP ĐƠN, TÀI CHÍNH
+   ========================================================= */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const nf=new Intl.NumberFormat('vi-VN');
+const num=n=>nf.format(Math.round(n)), vnd=n=>num(n)+' đ', mil=n=>(n/1e6).toLocaleString('vi-VN',{maximumFractionDigits:2})+' tr';
+const dateIn=d=>{const x=new Date();x.setDate(x.getDate()+d);return x.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'})};
+const clamp=(v,a=0,b=100)=>Math.max(a,Math.min(b,v));
+const W={T:.35,L:.30,D:.20,C:.15}, LBL={T:'Thời gian',L:'Địa điểm',D:'Khả năng nhận',C:'Chi phí'};
+
+function evaluate(order,t){
+  const type=TYPES.find(x=>x.id===order.type), store=STORES.find(s=>s.id===order.store);
+  const weight=type.weight*order.qty, arrival=t.departDay+2, reasons=[];
+  if(t.route!=='KR-VN')reasons.push('Sai tuyến (không phải Hàn Quốc – Việt Nam)');
+  if(!t.accepts.includes(order.type))reasons.push(`Không nhận loại hàng “${type.label}”`);
+  if(t.city!==store.city)reasons.push(`Không thể đến điểm mua tại ${store.name} (${store.city})`);
+  if(arrival>order.deadlineDays)reasons.push(`Không kịp hạn nhận (hàng về tới Việt Nam sau ${arrival} ngày)`);
+  if(weight>t.capacity)reasons.push('Vượt sức chứa của người mang hàng');
+  if(reasons.length)return{t,ok:false,reasons};
+  const slack=order.deadlineDays-arrival;
+  const T=clamp(45+slack*11), L=t.areas.includes(order.store)?100:70;
+  const D=clamp(t.rating/5*60+(t.verified?25:0)+clamp((t.capacity-weight)*3,0,15));
+  const items=(order.unitPrice||type.price)*order.qty, total=items+t.fee, ratio=total/order.budget;
+  const C=ratio<=.9?100:ratio<=1?80:clamp(80-(ratio-1)*200);
+  const scores={T:Math.round(T),L:Math.round(L),D:Math.round(D),C:Math.round(C)};
+  return{t,ok:true,scores,score:Math.round(W.T*T+W.L*L+W.D*D+W.C*C),items,total,arrival,over:total>order.budget};
+}
+function match(order){const all=TRAVELERS.map(t=>evaluate(order,t));return{eligible:all.filter(r=>r.ok).sort((a,b)=>b.score-a.score),rejected:all.filter(r=>!r.ok)}}
+function buildOptions(order,res){
+  const type=TYPES.find(x=>x.id===order.type), items=(order.unitPrice||type.price)*order.qty, weight=type.weight*order.qty, opts=[];
+  res.eligible.slice(0,2).forEach((r,i)=>opts.push({key:'t'+r.t.id,method:'traveler',name:r.t.name,sub:i?'Phương án dự phòng':'Phù hợp nhất theo điểm ghép',total:r.total,eta:r.arrival,etaLabel:`Khoảng ${r.arrival} ngày`,tracking:'Xác nhận từng mốc + ảnh bằng chứng',warn:r.over?'Vượt ngân sách dự kiến':'',score:r.score}));
+  CARRIERS.filter(c=>c.accepts.includes(order.type)).forEach(c=>opts.push({key:'s'+c.id,method:'standard',name:c.name,sub:'Vận chuyển thông thường kèm mua hộ',total:items+BUY_FEE+c.base+c.perUnit*weight,eta:c.daysMax,etaLabel:`${c.daysMin}–${c.daysMax} ngày`,tracking:c.tracking,warn:c.daysMax>order.deadlineDays?'Có thể trễ hạn nhận':''}));
+  const cheap=Math.min(...opts.map(o=>o.total)), fast=Math.min(...opts.map(o=>o.eta));
+  return opts.map(o=>({...o,badges:[o.total===cheap&&'Rẻ nhất',o.eta===fast&&'Nhanh nhất'].filter(Boolean)}));
+}
+
+/* =========================================================
+   C. RENDER CÁC PHẦN TĨNH
+   ========================================================= */
+function card(h,m,v,hue){return `<div class="pcard ${v}" style="--h:${hue}"><div class="shine"></div><div class="pc-top"><span>${h}</span><span class="pc-ver">${m[1]}</span></div><div class="pc-art"><svg viewBox="0 0 100 100"><circle cx="50" cy="38" r="16" fill="rgba(255,255,255,.85)"/><path d="M16 96c4-26 20-36 34-36s30 10 34 36z" fill="rgba(255,255,255,.7)"/><path d="M80 14l2.4 6 6 2.4-6 2.4L80 31l-2.4-6-6-2.4 6-2.4z" fill="#fff"/></svg></div><div class="pc-name">${m[0]}</div></div>`}
+$('#heroVisual').innerHTML=card('BTS',['Jung Kook','ARIRANG'],'pc-1',265)+card('BLACKPINK',['JENNIE','BORN PINK'],'pc-2',325)+card('Stray Kids',['Felix','KARMA'],'pc-3',190)+'<div class="route-pill">SEOUL ✈ SAIGON</div><div class="float-chip chip-a">✈️ Lịch bay khớp 92 điểm</div><div class="float-chip chip-b">✅ Có hóa đơn & ảnh sản phẩm</div>';
+const TICK=['Album','Photocard','POB','Lightstick','Merch chính thức','Thời trang nhóm','Photobook & Season’s Greetings','Hàng concert & pop-up','Traveler Delivery','Standard Shipping'];
+$('#ticker').innerHTML=[...TICK,...TICK].map(t=>`<span>${t}<em>✦</em></span>`).join('');
+$('#flow').innerHTML=FLOW.map((f,i)=>`<li class="reveal" style="--d:${i*80}ms"><span class="flow-n">${i+1}</span><div><small>${f[1]}</small><h3>${f[0]}</h3><p>${f[2]}</p></div></li>`).join('');
+
+/* =========================================================
+   D. DEMO TƯƠNG TÁC
+   ========================================================= */
+const S={step:0,order:null,choice:null,res:null,idx:0,timer:null,playing:false};
+const STEPS=[['📝','Tạo yêu cầu'],['🧩','Ghép đơn'],['⚖️','So sánh'],['📍','Theo dõi']];
+const canGo=i=>i===0||((i===1||i===2)&&!!S.res)||(i===3&&!!S.choice);
+function go(i){clearInterval(S.timer);S.step=i;renderDemo()}
+function renderStepper(){return;
+  $('#stepper').innerHTML=STEPS.map((s,i)=>`<button class="step ${i===S.step?'active':''} ${i<S.step?'past':''}" data-go="${i}" ${canGo(i)?'':'disabled'} ${i===S.step?'aria-current="step"':''}><span class="ico">${s[0]}</span><span class="lbl">${s[1]}</span></button>`).join('');
+}
+function summary(o){const g=GROUPS.find(x=>x.id===o.group),s=STORES.find(x=>x.id===o.store),t=TYPES.find(x=>x.id===o.type);
+  return `<div class="order-summary"><span class="os-i">${t.icon}</span><div><b>${o.title||g.name+' · '+o.member} · ${o.version}</b><small>${o.qty} × ${t.label} · mua tại ${s.name} (${s.city}) · cần trong ${o.deadlineDays} ngày · ngân sách ${vnd(o.budget)}</small></div></div>`}
+function renderDemo(){
+  renderStepper();
+  const p=$('#panel');p.style.animation='none';p.offsetHeight;p.style.animation='';
+  ({0:viewForm,1:viewMatch,2:viewCompare,3:viewTrack})[S.step]();
+  window.dispatchEvent(new Event('demo-rendered'));
+}
+($('#stepper')||document.createElement('i')).addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b&&!b.disabled)go(+b.dataset.go)});
+
+/* ---- Bước 1: form ---- */
+function viewForm(){
+  const f=S.order||PRESETS[0].o, g=GROUPS.find(x=>x.id===f.group), type=TYPES.find(t=>t.id===f.type);
+  $('#panel').innerHTML=`<form class="panel-body" id="orderForm" novalidate><div class="form-head"><span class="eyebrow">Create a request</span><h3>Bạn đang tìm gì nhỉ?</h3><b>BƯỚC 01 / 02</b></div>
+   ${S.pick?`<div class="pick-note">Món đã chọn: <b>${S.pick}</b>. Điền thêm thành viên, phiên bản và nơi mua bên dưới.</div>`:''}<div class="presets"><span>Điền nhanh:</span>${PRESETS.map((p,i)=>`<button type="button" class="chip" data-preset="${i}">${p.label}</button>`).join('')}</div>
+   <div class="form-grid">
+    <label class="span-2">Tên sản phẩm *<input type="text" name="title" value="${(f.title||S.pick||'').replace(/"/g,'&quot;')}" placeholder="VD: BTS · Photocard Jung Kook"></label><label>Nhóm nhạc / Nghệ sĩ <small>(K-pop có thật)</small><select name="group">${GROUPS.map(x=>`<option value="${x.id}" ${x.id===f.group?'selected':''}>${x.name}</option>`).join('')}</select></label>
+    <label>Thành viên<select name="member">${g.members.map(m=>`<option ${m===f.member?'selected':''}>${m}</option>`).join('')}</select></label>
+    <label>Phiên bản<select name="version">${VERSIONS.map(v=>`<option ${v===f.version?'selected':''}>${v}</option>`).join('')}</select></label>
+    <label>Cửa hàng / điểm mua<select name="store">${STORES.map(s=>`<option value="${s.id}" ${s.id===f.store?'selected':''}>${s.name} (${s.city})</option>`).join('')}</select></label>
+    <div class="span-2 lbl-like">Loại sản phẩm<div class="type-grid" style="margin-top:6px">${TYPES.map(t=>`<label class="type-card"><input type="radio" name="type" value="${t.id}" ${t.id===f.type?'checked':''}><span class="ti">${t.icon}</span><b>${t.label}</b><small>~${vnd(t.price)}/món</small></label>`).join('')}</div></div>
+    <label id="qtyL">Số lượng<input type="number" name="qty" min="1" max="20" value="${f.qty}"><em class="err" hidden>Số lượng từ 1 đến 20.</em></label>
+    <label id="budL">Ngân sách tối đa (VND)<input type="number" name="budget" min="100000" step="50000" value="${f.budget}"><em class="err" hidden>Ngân sách tối thiểu 100.000 đ.</em></label>
+    <div class="span-2 lbl-like">Hạn cần nhận<div class="seg" style="margin-top:6px">${DEADLINES.map(d=>`<label><input type="radio" name="deadlineDays" value="${d[0]}" ${d[0]===f.deadlineDays?'checked':''}>${d[1]}</label>`).join('')}</div></div>
+   <label class="span-2">Link sản phẩm tại cửa hàng<input type="url" name="link" value="${f.link||''}" placeholder="https://…"></label><label class="span-2">Mô tả thêm<textarea name="desc" rows="2">${f.desc||''}</textarea></label><div class="span-2 lbl-like">Bạn muốn xem phương án nào?<div class="seg" style="margin-top:6px">${[['both','So sánh cả hai'],['traveler','Người mua hộ'],['standard','Vận chuyển thường']].map(v=>`<label><input type="radio" name="view" value="${v[0]}" ${v[0]===(f.view||'both')?'checked':''}>${v[1]}</label>`).join('')}</div></div>
+   </div>
+   <div class="form-foot"><div class="estimate">Giá hàng ước tính <b id="est">${vnd((f.unitPrice||type.price)*f.qty)}</b> <small>(chưa gồm phí điều phối/giao)</small></div><button class="btn btn-primary btn-lg" type="submit">Tìm người mua hộ phù hợp ↗</button></div><p class="note">Chưa phát sinh thanh toán. Trước khi xác nhận, bạn sẽ xem báo giá và chọn phương án.</p></form>`;
+  const form=$('#orderForm');
+  const read=()=>{const d=new FormData(form);return{group:d.get('group'),member:d.get('member'),version:d.get('version'),store:d.get('store'),type:d.get('type'),qty:+d.get('qty'),budget:+d.get('budget'),deadlineDays:+d.get('deadlineDays'),title:d.get('title'),unitPrice:d.get('type')===f.type?(f.unitPrice||null):null,link:d.get('link'),desc:d.get('desc'),view:d.get('view')}};
+  const est=()=>{const o=read();$('#est').textContent=vnd((form.querySelector('[name="type"]:checked').value===f.type&&f.unitPrice?f.unitPrice:TYPES.find(t=>t.id===o.type).price)*(o.qty||0))};
+  form.addEventListener('change',e=>{
+    if(e.target.name==='group'){const gm=GROUPS.find(x=>x.id===e.target.value).members;form.member.innerHTML=gm.map(m=>`<option>${m}</option>`).join('')}
+    est();
+  });
+  form.addEventListener('input',est);
+  form.addEventListener('click',e=>{const b=e.target.closest('[data-preset]');if(b){S.order=PRESETS[+b.dataset.preset].o;S.pick=null;viewForm()}});
+  form.addEventListener('submit',e=>{
+    e.preventDefault();const o=read();
+    const badQ=!(o.qty>=1&&o.qty<=20), badB=!(o.budget>=100000);
+    $('#qtyL').classList.toggle('has-error',badQ);$('.err',$('#qtyL')).hidden=!badQ;
+    $('#budL').classList.toggle('has-error',badB);$('.err',$('#budL')).hidden=!badB;
+    if(badQ||badB)return;
+    S.order=o;S.choice=null;S.res=match(o);go(1);
+  });
+}
+
+/* ---- Bước 2: ghép đơn ---- */
+function viewMatch(){
+  const {eligible,rejected}=S.res;
+  $('#panel').innerHTML=`<div class="panel-body">${summary(S.order)}<div class="scanner" role="status"><div class="scan-ring"></div><p>Đang đối chiếu tuyến, ngày bay, điểm mua, loại hàng và sức chứa…</p></div></div>`;
+  const token=S.order;
+  setTimeout(()=>{
+    if(S.step!==1||S.order!==token)return;
+    const list=eligible.length?`<h3 class="sub-h">Phương án đạt điều kiện (${eligible.length})</h3><div class="match-list">${eligible.map((r,i)=>`
+     <article class="match-card ${i===0?'top':''}" style="--d:${i*110}ms"><div class="mc-head"><div class="avatar">${r.t.name.split(' ').pop()[0]}</div>
+      <div class="mc-name"><b>${r.t.name} ${r.t.verified?'<span class="verified">✓ Đã xác minh</span>':''}</b><small>⭐ ${r.t.rating} · ${r.t.trips} chuyến · bay sau ${r.t.departDay} ngày</small></div>
+      <div class="mc-score"><strong>${r.score}</strong><small>/100</small></div></div>
+      <div class="score-bars">${Object.entries(r.scores).map(([k,v])=>`<div class="sb"><span>${LBL[k]} <em>${W[k]*100}%</em></span><b>${v}</b><div class="sb-track"><i data-w="${v}"></i></div></div>`).join('')}</div>
+      <div class="mc-foot"><span>Tổng ước tính <b>${vnd(r.total)}</b> (hàng ${vnd(r.items)} + phí ${vnd(r.t.fee)})</span>${r.over?'<span class="warn">Vượt ngân sách</span>':''}${i===0?'<span class="badge-top">Đề xuất #1</span>':''}</div></article>`).join('')}</div>`
+     :`<div class="empty-match"><div class="ei">🧭</div><h3>Chưa có người mang hàng đáp ứng đủ điều kiện</h3><p>Đây đúng là tình huống Hybrid Delivery xử lý: hệ thống chuyển sang đề xuất vận chuyển thông thường để bạn so sánh và tự lựa chọn.</p></div>`;
+    $('#panel').innerHTML=`<div class="panel-body">${summary(S.order)}${list}
+     ${rejected.length?`<details class="rejected"><summary>Đã loại ${rejected.length} phương án không đạt điều kiện bắt buộc</summary><ul>${rejected.map(r=>`<li><b>${r.t.name}</b><span>${r.reasons.join('; ')}</span></li>`).join('')}</ul></details>`:''}
+     <p class="note">Trong giai đoạn đầu, kết quả ghép do nhân sự duyệt trước khi gửi đề xuất. Điểm số không thay thế kiểm tra hàng hóa và pháp lý.</p>
+     <div class="panel-actions"><button class="btn btn-ghost" data-go-btn="0">← Sửa yêu cầu</button><button class="btn btn-primary" data-go-btn="2">${eligible.length?'So sánh với vận chuyển thường →':'Xem phương án vận chuyển thường →'}</button></div></div>`;
+    requestAnimationFrame(()=>setTimeout(()=>$$('.sb-track i').forEach(i=>i.style.width=i.dataset.w+'%'),60));
+  },1100);
+}
+
+/* ---- Bước 3: so sánh ---- */
+function viewCompare(){
+  const opts=buildOptions(S.order,S.res);
+  const sel=S.choice&&opts.find(o=>o.key===S.choice.key);
+  $('#panel').innerHTML=`<div class="panel-body">${summary(S.order)}<h3 class="sub-h">So sánh tổng phí, thời gian và điều kiện</h3><p class="muted">Bạn có quyền chọn. Hệ thống không tự chuyển phương thức khi chưa được bạn xác nhận.</p>
+   <div class="option-grid" role="radiogroup" aria-label="Chọn phương án giao hàng">${opts.map((o,i)=>`
+    <button class="option ${o.method} ${sel&&sel.key===o.key?'sel':''}" role="radio" aria-checked="${!!sel&&sel.key===o.key}" data-opt="${o.key}" style="--d:${i*70}ms">
+     <div class="op-head"><span class="op-method">${o.method==='traveler'?'🧳 Traveler':'📦 Standard'}</span>${o.badges.map(b=>`<em class="badge">${b}</em>`).join('')}</div>
+     <h4>${o.name}</h4><small class="op-sub">${o.sub}</small><div class="op-total">${vnd(o.total)}</div>
+     <ul><li><span>Thời gian</span><b>${o.etaLabel}</b></li><li><span>Dự kiến nhận</span><b>~${dateIn(o.eta)}</b></li><li><span>Theo dõi</span><b>${o.tracking}</b></li>${o.score!=null?`<li><span>Điểm ghép</span><b>${o.score}/100</b></li>`:''}</ul>
+     ${o.warn?`<div class="warn">⚠ ${o.warn}</div>`:''}</button>`).join('')}</div>
+   <div class="panel-actions"><button class="btn btn-ghost" data-go-btn="1">← Kết quả ghép</button><button class="btn btn-primary" id="confirmBtn" ${sel?'':'disabled'} data-go-btn="3">${sel?`Xác nhận · ${sel.name} →`:'Chọn một phương án'}</button></div></div>`;
+  S.opts=opts;
+}
+
+/* ---- Bước 4: theo dõi ---- */
+const ST_T=[['Tiếp nhận yêu cầu','Đơn được cấp mã và chuẩn hóa dữ liệu.'],['Xác minh & duyệt ghép','Nhân sự kiểm tra điều kiện bắt buộc.'],['Các bên xác nhận','Người mua và người mang hàng đồng ý.','Xác nhận hai bên'],['Thanh toán hợp lệ','Qua đối tác thanh toán được cấp phép.','Biên nhận thanh toán'],['Mua hàng tại Hàn Quốc','Người mang hàng mua đúng phiên bản.','Hóa đơn + ảnh sản phẩm'],['Bay về Việt Nam','Cập nhật mốc di chuyển.','Ảnh khai báo hành lý'],['Bàn giao','Bàn giao đúng điểm hẹn.','Ảnh/biên bản bàn giao'],['Hoàn tất','Người mua xác nhận, đánh giá hoặc khiếu nại.']];
+const ST_S=[['Tiếp nhận yêu cầu','Đơn được cấp mã và chuẩn hóa dữ liệu.'],['Xác nhận báo giá','Khách đồng ý chuyển sang vận chuyển thường.','Báo giá có thời hạn'],['Thanh toán hợp lệ','Qua đối tác thanh toán được cấp phép.','Biên nhận thanh toán'],['Mua hộ tại Hàn Quốc','Đối tác mua đúng sản phẩm.','Hóa đơn + ảnh sản phẩm'],['Bàn giao cho vận chuyển','Tạo mã vận đơn.','Mã vận đơn'],['Vận chuyển quốc tế','Theo dõi trạng thái theo hệ thống đơn vị.'],['Thông quan & giao hàng','Giao đến địa chỉ của khách.','Xác nhận giao hàng'],['Hoàn tất','Người mua xác nhận, đánh giá hoặc khiếu nại.']];
+function viewTrack(){
+  const c=S.choice, steps=c.method==='traveler'?ST_T:ST_S, code='CS-'+(1000+Math.abs([...c.key].reduce((a,ch)=>a+ch.charCodeAt(0)*7,0))%9000)+'-K7';
+  S.idx=0;S.playing=true;
+  $('#panel').innerHTML=`<div class="panel-body">${summary(S.order)}
+   <div class="track-head"><div><small>Mã đơn mô phỏng</small><b class="mono">${code}</b></div><div><small>Phương án</small><b>${c.method==='traveler'?'Traveler':'Standard'} · ${c.name}</b></div><div><small>Tổng chi phí</small><b>${vnd(c.total)}</b></div></div>
+   <div class="track-wrap"><ol class="timeline" id="tl"></ol><aside class="evidence"><h4>Bằng chứng đã lưu</h4><div id="ev"></div></aside></div>
+   <div class="panel-actions"><button class="btn btn-ghost" id="resetBtn">Tạo đơn mới</button><button class="btn btn-primary" id="playBtn">⏸ Tạm dừng</button></div></div>`;
+  const draw=()=>{
+    const done=S.idx>=steps.length-1;
+    $('#tl').innerHTML=steps.map((s,i)=>`<li class="${i<S.idx||(done&&i===S.idx)?'done':i===S.idx?'cur':''}"><span class="tl-dot">${i<S.idx||(done&&i===S.idx)?'✓':i+1}</span><div><b>${s[0]}</b><small>${s[1]}</small></div></li>`).join('');
+    const ev=steps.slice(0,S.idx+1).filter(s=>s[2]);
+    $('#ev').innerHTML=(ev.length?`<ul>${ev.map(s=>`<li><span>📎</span>${s[2]}</li>`).join('')}</ul>`:'<p class="muted">Chưa có bằng chứng ở bước này.</p>')+(done?'<div class="done-box"><b>🎉 Đơn hoàn tất</b><p>Bạn có thể đánh giá người mang hàng hoặc gửi khiếu nại kèm bằng chứng.</p></div>':'');
+    $('#playBtn').textContent=done?'↺ Chạy lại mô phỏng':S.playing?'⏸ Tạm dừng':'▶ Tiếp tục';
+  };
+  const tick=()=>{if(S.idx<steps.length-1){S.idx++;draw()}else{S.playing=false;clearInterval(S.timer);draw()}};
+  const start=()=>{clearInterval(S.timer);S.timer=setInterval(tick,1300)};
+  draw();start();
+  $('#playBtn').onclick=()=>{
+    if(S.idx>=steps.length-1){S.idx=0;S.playing=true;draw();start();return}
+    S.playing=!S.playing;S.playing?start():clearInterval(S.timer);draw();
+  };
+  $('#resetBtn').onclick=()=>{S.order=null;S.choice=null;S.res=null;S.pick=null;go(0)};
+}
+
+/* ---- Ủy quyền sự kiện cho nút điều hướng & chọn phương án ---- */
+/* ---- Ủy quyền sự kiện cho nút điều hướng & chọn phương án ---- */
+$('#panel').addEventListener('click',e=>{
+  const nav=e.target.closest('[data-go-btn]');
+  if(nav&&!nav.disabled){go(+nav.dataset.goBtn);return}
+  const o=e.target.closest('[data-opt]');
+  if(o){S.choice=S.opts.find(x=>x.key===o.dataset.opt);viewCompare()}
+});
+
+/* =========================================================
+   F. HIỆU ỨNG TOÀN TRANG: navbar, reveal, đếm số, thanh tiến độ
+   ========================================================= */
+const nav=$('#navbar'),prog=$('#progress');
+addEventListener('scroll',()=>{const y=scrollY,m=document.documentElement.scrollHeight-innerHeight;nav.classList.toggle('scrolled',y>20);prog.style.width=(m>0?y/m*100:0)+'%'},{passive:true});
+$('#burger').onclick=()=>{const o=$('#navlinks').classList.toggle('open');$('#burger').setAttribute('aria-expanded',o)};
+$$('#navlinks a').forEach(a=>a.addEventListener('click',()=>$('#navlinks').classList.remove('open')));
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function count(el){const t=+el.dataset.count,d=t%1?1:0;if(reduce){el.firstChild.nodeValue=t.toLocaleString('vi-VN',{minimumFractionDigits:d});return}const s=performance.now();(function f(n){const p=Math.min(1,(n-s)/1400),e=1-Math.pow(1-p,3);el.firstChild.nodeValue=(t*e).toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:1});if(p<1)requestAnimationFrame(f)})(s)}
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(!en.isIntersecting)return;const el=en.target;el.classList.add('in');io.unobserve(el);
+  $$('[data-count]',el).forEach(count);$$('.stat-bar span',el).forEach(b=>b.style.width=b.dataset.w+'%');$$('.ring-fg',el).forEach(r=>r.style.strokeDashoffset=r.dataset.off);
+}),{threshold:.15});
+$$('.reveal').forEach(el=>io.observe(el));
+
+/* ===== Khám phá / Người mua hộ / Tra cứu ===== */
+// Album names refer to real K-pop releases; other entries are suggested request types, NOT verified official SKUs.
+// Prices are only estimates for the offline demo; no product availability is claimed.
+const PROD=GROUPS.flatMap((g,idx)=>{
+  const base=idx%6, p=(c,title,price,edition='Mẫu yêu cầu')=>[c,g.name,title,new Intl.NumberFormat('vi-VN').format(price),edition,g.id];
+  const name=g.name, member=g.members.length>1?g.members[idx%Math.max(1,g.members.length-1)]:g.members[0];
+  const items=g.albums.map((album,i)=>p('album',album,430000+i*45000+base*10000,'Album phát hành'));
+  items.push(
+    p('photocard',`Photocard ${member} · chọn phiên bản`,110000+base*12000),
+    p('pob',`POB / quà preorder ${name} · chọn shop`,210000+base*15000),
+    p('lightstick',`Lightstick / phụ kiện ${name} · xác minh mẫu`,850000+base*55000),
+    p('merch',`Poster / móc khóa ${name} · chọn mẫu`,240000+base*20000),
+    p('fashion',`Áo thun / hoodie ${name} · chọn size`,520000+base*45000),
+    p('photobook',`Photobook / ấn phẩm ${name} · chọn phiên bản`,480000+base*32000),
+    p('event',`Concert / pop-up merchandise ${name} · theo sự kiện`,350000+base*29000)
+  );
+  return items;
+});
+const gh=n=>{const h=[...n].reduce((a,c)=>a+c.charCodeAt(0),0)%360;return `background:linear-gradient(135deg,hsl(${h} 85% 82%),hsl(${(h+50)%360} 90% 70%))`};
+
+/* Editorial-quality, self-contained SVG illustrations for the eight product categories.
+   No third-party images, external icon fonts, or change to the original card layout. */
+const PRODUCT_ART={
+  all: `<circle cx="62" cy="62" r="36" fill="#fff" stroke="#2B1B51" stroke-width="3"/><path d="M64 23L74 49 102 59 74 69 64 98 53 69 26 59 53 49Z" fill="#FFD343" stroke="#2B1B51" stroke-width="3" stroke-linejoin="round"/><circle cx="95" cy="26" r="7" fill="#FD70B2" stroke="#2B1B51" stroke-width="3"/><path d="M16 23v18M7 32h18M98 100v16M90 108h16" stroke="#2B1B51" stroke-width="3" stroke-linecap="round"/>`,
+  album: `<g transform="rotate(-10 64 64)"><rect x="21" y="21" width="76" height="84" rx="10" fill="#A98CFF" stroke="#2B1B51" stroke-width="3"/><rect x="27" y="27" width="64" height="72" rx="6" fill="#F7EBFF"/><path d="M30 88l29-34 18 20 13-11v34H30z" fill="#FA93C8"/><path d="M39 42h41M39 49h24" stroke="#2B1B51" stroke-width="3" stroke-linecap="round"/><path d="M30 91h60" stroke="#2B1B51" stroke-width="2"/></g><circle cx="87" cy="80" r="28" fill="#DAF7FA" stroke="#2B1B51" stroke-width="3"/><path d="M87 53a28 28 0 0 1 27 22l-26 6z" fill="#92E4FA"/><path d="M61 70a28 28 0 0 1 16-15l10 26z" fill="#FB8FC0"/><path d="M86 108a27 27 0 0 1-20-11l22-17z" fill="#E8B7FF"/><circle cx="87" cy="80" r="9" fill="#FFD54A" stroke="#2B1B51" stroke-width="2.5"/><circle cx="87" cy="80" r="3" fill="#fff"/>`,
+  photocard: `<g transform="rotate(-10 55 66)"><rect x="17" y="25" width="68" height="84" rx="9" fill="#A78BFF" stroke="#2B1B51" stroke-width="3"/><rect x="22" y="30" width="58" height="74" rx="6" fill="#fff"/></g><g transform="rotate(9 77 62)"><rect x="43" y="12" width="69" height="91" rx="10" fill="#fff" stroke="#2B1B51" stroke-width="3"/><rect x="49" y="18" width="57" height="67" rx="6" fill="#F5B1D4"/><path d="M54 77Q54 57 76 59Q99 59 101 77V85H54Z" fill="#7755C6"/><circle cx="77" cy="47" r="16" fill="#FFD7B7"/><path d="M60 43Q56 22 77 24Q96 24 95 42Q87 32 80 36Q65 34 60 43Z" fill="#342047"/><circle cx="70" cy="48" r="1.5" fill="#2B1B51"/><circle cx="84" cy="48" r="1.5" fill="#2B1B51"/><path d="M73 55q4 4 8 0" stroke="#2B1B51" fill="none" stroke-width="1.8" stroke-linecap="round"/><path d="M61 94h24" stroke="#FC76B2" stroke-width="3" stroke-linecap="round"/></g><path d="M19 15v10M14 20h10M112 103v13M105 109h14" stroke="#FFD443" stroke-width="3" stroke-linecap="round"/>`,
+  pob: `<path d="M42 43q-16-16-19-8q-6 13 25 17M82 43q16-16 19-8q6 13-25 17" fill="none" stroke="#2B1B51" stroke-width="3.5" stroke-linecap="round"/><rect x="26" y="49" width="76" height="57" rx="7" fill="#FF85BD" stroke="#2B1B51" stroke-width="3"/><rect x="20" y="43" width="88" height="21" rx="5" fill="#FFB8D4" stroke="#2B1B51" stroke-width="3"/><path d="M56 43h16v63H56z" fill="#FFD74F" stroke="#2B1B51" stroke-width="2.5"/><path d="M31 63h73" stroke="#2B1B51" stroke-width="3"/><path d="M63 40C43 15 30 26 41 40c8 8 16 4 22 0Zm0 0c21-25 34-14 22 0-8 8-16 4-22 0Z" fill="#FFD74F" stroke="#2B1B51" stroke-width="3"/><path d="M15 22l4 8 8 4-8 4-4 8-4-8-8-4 8-4zM110 22l3 6 6 3-6 3-3 6-3-6-6-3 6-3z" fill="#fff" stroke="#2B1B51" stroke-width="2"/>`,
+  lightstick: `<g transform="rotate(-14 64 63)"><path d="M56 70h17v42a8.5 8.5 0 0 1-17 0Z" fill="#8256D9" stroke="#2B1B51" stroke-width="3"/><rect x="54" y="76" width="22" height="13" rx="4" fill="#FFF" stroke="#2B1B51" stroke-width="2.5"/><path d="M64 11c-22 0-37 18-37 38 0 23 17 35 37 35 21 0 38-12 38-35 0-20-16-38-38-38Z" fill="#DEF7FF" stroke="#2B1B51" stroke-width="3.5"/><path d="M64 18q20 3 26 24" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M64 28l7 13 15 2-11 11 3 15-14-8-14 8 3-15-11-11 15-2z" fill="#FF80B8" stroke="#2B1B51" stroke-width="3" stroke-linejoin="round"/><path d="M61 96h7M61 102h7" stroke="#E9D7FF" stroke-width="3" stroke-linecap="round"/></g><path d="M14 50v16M6 58h16M108 17v14M101 24h14" stroke="#FFD443" stroke-width="3" stroke-linecap="round"/>`,
+  merch: `<circle cx="64" cy="21" r="12" fill="none" stroke="#2B1B51" stroke-width="5"/><path d="M64 32v14" stroke="#2B1B51" stroke-width="5" stroke-linecap="round"/><circle cx="42" cy="56" r="13" fill="#E7B2FF" stroke="#2B1B51" stroke-width="3"/><circle cx="86" cy="56" r="13" fill="#E7B2FF" stroke="#2B1B51" stroke-width="3"/><path d="M28 86Q28 63 45 57Q51 39 64 39Q80 39 86 57Q101 63 100 86L92 109H35Z" fill="#BE93FF" stroke="#2B1B51" stroke-width="3"/><ellipse cx="64" cy="73" rx="29" ry="30" fill="#DFC3FF" stroke="#2B1B51" stroke-width="3"/><ellipse cx="51" cy="68" rx="4" ry="5" fill="#2B1B51"/><ellipse cx="78" cy="68" rx="4" ry="5" fill="#2B1B51"/><ellipse cx="64" cy="80" rx="8" ry="6" fill="#FFE9F8"/><path d="M61 78q3 4 6 0M64 81v6m-6 0q6 6 12 0" fill="none" stroke="#2B1B51" stroke-width="2" stroke-linecap="round"/><ellipse cx="37" cy="104" rx="12" ry="8" fill="#BE93FF" stroke="#2B1B51" stroke-width="3"/><ellipse cx="91" cy="104" rx="12" ry="8" fill="#BE93FF" stroke="#2B1B51" stroke-width="3"/><path d="M112 43l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#FFD74F" stroke="#2B1B51" stroke-width="2"/>`,
+  fashion: `<path d="M44 22 26 32 9 59 27 72l12-16-2 57h56l-2-57 12 16 17-13-17-27-19-10q-5 12-20 12T44 22Z" fill="#87D9E8" stroke="#2B1B51" stroke-width="3.5" stroke-linejoin="round"/><path d="M45 22q6 22 19 22t20-22l-7-5q-12 7-26 0z" fill="#BDF1F8" stroke="#2B1B51" stroke-width="3"/><path d="M48 39q3 16 16 16t16-16" fill="none" stroke="#2B1B51" stroke-width="2.5"/><path d="M58 50v18m12-18v18" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M43 86q21 8 43 0l-5 16H47Z" fill="#5AB5D1"/><path d="M38 106h54" stroke="#2B1B51" stroke-width="3" stroke-linecap="round"/><path d="M58 78l6-7 6 7-6 7z" fill="#FF81B6" stroke="#2B1B51" stroke-width="2"/>`,
+  photobook: `<path d="M14 37Q39 20 64 38Q88 20 114 37v67Q85 88 64 107q-24-18-50-3Z" fill="#B29BFA" stroke="#2B1B51" stroke-width="3.5" stroke-linejoin="round"/><path d="M20 31q23-9 44 8 19-17 44-8v67q-22-11-44 8-21-19-44-8Z" fill="#fff" stroke="#2B1B51" stroke-width="3"/><path d="M64 39v67" stroke="#2B1B51" stroke-width="3"/><rect x="28" y="43" width="28" height="31" rx="4" fill="#F6B0D3"/><circle cx="42" cy="52" r="6" fill="#FFD7B7"/><path d="M30 69q4-15 12-13 11 0 13 13" fill="#8058CB"/><path d="M76 47h23M76 54h20M76 61h23M76 72h17M76 79h23" stroke="#9588B0" stroke-width="2.5" stroke-linecap="round"/><path d="M35 85h19" stroke="#FA8CC5" stroke-width="3" stroke-linecap="round"/><path d="M112 16l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#FFD74F" stroke="#2B1B51" stroke-width="2"/>`,
+  event: `<g transform="rotate(-13 64 62)"><path d="M21 38h87v17q-11 0-11 10t11 10v17H21V75q11 0 11-10T21 55Z" fill="#FFDC71" stroke="#2B1B51" stroke-width="3.5"/><path d="M78 40v49" stroke="#2B1B51" stroke-width="3" stroke-dasharray="4 5"/><path d="M53 48 57 57l10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1Z" fill="#F98FC2" stroke="#2B1B51" stroke-width="2.5"/><path d="M84 54h17M84 62h12M84 70h17" stroke="#2B1B51" stroke-width="2.5" stroke-linecap="round"/></g><path d="M15 24l5 11 11 5-11 5-5 11-5-11-11-5 11-5zM107 90l4 9 9 4-9 4-4 9-4-9-9-4 9-4z" fill="#A8DFFC" stroke="#2B1B51" stroke-width="2.5"/>`
+};
+function productArt(type){return `<svg class="prod-art" viewBox="0 0 128 128" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">${PRODUCT_ART[type]||PRODUCT_ART.all}</svg>`}
+
+let pf='all';
+const cnt=id=>id==='all'?PROD.length:PROD.filter(p=>p[0]===id).length;
+function renderProducts(){
+  const tiles=[{id:'all',label:'Tất cả',icon:'✨',hue:280},...CATS];
+  $('#catGrid').innerHTML=tiles.map(c=>`<button type="button" class="cat" style="--h:${c.hue}" data-c="${c.id}" aria-pressed="${c.id===pf}"><span class="ci">${productArt(c.id)}</span><b>${c.label}</b><small>${cnt(c.id)} món mẫu</small></button>`).join('');
+  const c=CATS.find(x=>x.id===pf), d=$('#catDetail');
+  d.hidden=!c;
+  d.innerHTML=c?`<div><h3>${productArt(c.id)} ${c.label}</h3><p>${c.desc}</p><ul class="subs">${c.subs.map(x=>`<li>${x}</li>`).join('')}</ul><p class="small muted" style="margin:0">${c.note}</p></div><div class="cd-act"><div class="pr">~${vnd(c.price)} <small class="muted">/ món, giá minh họa</small></div><a class="btn btn-primary" href="#create" data-start="${c.id}">Mua hộ loại này</a></div>`:'';
+  $('#pgrid').innerHTML=PROD.map((p,i)=>[p,i]).filter(([p])=>(pf==='all'||p[0]===pf)&&(p[1]+' '+p[2]).toLowerCase().includes((($('#pSearch')||{}).value||'').toLowerCase())).map(([p,i])=>{const k=CATS.find(x=>x.id===p[0]);return `<article class="card pcard"><div class="ph" style="${gh(p[1])}"><em>${k.label.toUpperCase()}</em>${productArt(k.id)}</div><div class="pb"><small class="muted">${p[1]} · ${p[4]}</small><h4>${p[2]}</h4><div class="pr">${p[3]} ₫ <small class="muted">giá minh họa</small></div><a class="btn btn-ghost btn-sm" href="#create" data-pick="${i}" style="margin-top:10px">Chọn món này</a></div></article>`}).join('');
+}
+function startOrder(type,title,price){
+  const unit=price||TYPES.find(t=>t.id===type).price;
+  S.order={...PRESETS[0].o,type,qty:1,title:title||'',unitPrice:unit,budget:Math.max(100000,Math.ceil(unit*1.8/50000)*50000)};
+  S.pick=title;S.res=null;S.choice=null;clearInterval(S.timer);S.step=0;renderDemo();
+}
+$('#catGrid').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(b){pf=b.dataset.c;renderProducts()}});
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-pick],[data-start]');if(!a)return;
+  if(a.dataset.pick!==undefined){const p=PROD[+a.dataset.pick];startOrder(p[0],`${p[1]} · ${p[2]}`,+p[3].replace(/\./g,''));S.order.group=p[5];S.order.member='Tất cả thành viên';if(GROUPS.find(g=>g.id===p[5]).members.length===1)S.order.member=GROUPS.find(g=>g.id===p[5]).members[0];renderDemo()}
+  else{const c=CATS.find(x=>x.id===a.dataset.start);startOrder(c.id,c.label)}
+});
+renderProducts();
+$('#tgrid').innerHTML=TRAVELERS.filter(t=>t.route==='KR-VN').map(t=>`<div class="card tcard"><div class="avatar">${t.name.split(' ').pop()[0]}</div><h4>${t.name}</h4><p class="meta">${t.city} → Việt Nam · ${t.trips} chuyến · ★ ${t.rating}</p><p class="meta">Nhận tối đa ${t.capacity} món · phí từ ${vnd(t.fee)}</p><span class="vf ${t.verified?'':'no'}">${t.verified?'✓ Đã xác minh':'Chưa xác minh'}</span></div>`).join('')+`<div class="card tcard tcard-cta"><a href="#create" class="btn btn-ghost">Đăng ký làm người mua hộ ↗</a></div>`;
+const TRK=[['Yêu cầu đã xác nhận','24 Th10 · 09:30',1],['Đã mua & gửi bằng chứng','25 Th10 · 15:20 · Hóa đơn + ảnh',1],['Đang trên đường về Việt Nam','27 Th10 · 08:15',1],['Giao hàng & xác nhận','Dự kiến cập nhật tiếp',0]];
+function trk(code){
+  const ok=code.trim().toUpperCase()==='CS-2026-1042';
+  $('#trkOut').innerHTML=ok?`<small class="eyebrow-up">Order journey · ● Đang di chuyển</small><h3 style="margin:6px 0">CS-2026-1042 <span class="muted small">DEMO</span></h3><p class="muted">TXT · minisode1: Blue Hour — Limited · mua hộ bởi Minh Anh · Seoul · <b style="color:var(--text)">${vnd(850000)}</b></p><ul class="tl">${TRK.map(r=>`<li class="${r[2]?'ok':''}"><span class="ic">${r[2]?'✓':'4'}</span><div><b>${r[0]}</b><small>${r[1]}</small></div></li>`).join('')}</ul><p class="note">Tem niêm phong CS-SL-48291: hình ảnh và bằng chứng mua hàng đã được ghi nhận (dữ liệu giả lập).</p>`:`<p class="muted" style="margin:0">Không tìm thấy mã “${code.replace(/[<>&]/g,'')}”. Hãy thử mã demo <b>CS-2026-1042</b>.</p>`;
+}
+$('#trkForm').addEventListener('submit',e=>{e.preventDefault();trk($('#trkIn').value||'CS-2026-1042')});
+trk('CS-2026-1042');
+
+renderDemo();
+</script>
+<script>
+(()=>{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, fine=matchMedia('(pointer:fine)').matches;
+const q=(s,r=document)=>r.querySelector(s), rnd=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.floor(Math.random()*a.length)];
+const COL=['#FF4D94','#5B3FF5','#FFB800','#0B8F68','#2BB4F0'], SH=['✦','♥','★','♪','✧'];
+
+/* toast */
+let tt;const tel=document.createElement('div');tel.className='toast';tel.setAttribute('role','status');document.body.appendChild(tel);
+const toast=m=>{tel.textContent=m;tel.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>tel.classList.remove('show'),1900)};
+
+/* sparkles: burst + cursor trail */
+function fx(cls,x,y,vars){const s=document.createElement('span');s.className=cls;s.setAttribute('aria-hidden','true');s.textContent=pick(SH);s.style.cssText=`--x:${x}px;--y:${y}px;color:${pick(COL)};font-size:${rnd(14,26)}px;${vars}`;document.body.appendChild(s);s.addEventListener('animationend',()=>s.remove())}
+function burst(x,y,n=14){if(reduce)return;for(let i=0;i<n;i++){const a=rnd(0,6.283),d=rnd(50,130);fx('fx',x,y,`--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d-30}px;--r:${rnd(-240,240)}deg`)}}
+if(fine&&!reduce){let lx=0,ly=0,t=0;addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const n=performance.now();if(n-t<45||Math.hypot(e.clientX-lx,e.clientY-ly)<36)return;t=n;lx=e.clientX;ly=e.clientY;fx('fx trail',lx,ly,'')},{passive:true})}
+document.addEventListener('click',e=>{
+  if(e.target.tagName==='INPUT')return;
+  const t=e.target.closest('.btn-primary,.option,.cat,.type-card,.seg label,.chip,.heart');if(!t)return;
+  let x=e.clientX,y=e.clientY;if(!e.detail){const r=t.getBoundingClientRect();x=r.left+r.width/2;y=r.top+r.height/2}
+  burst(x,y,t.classList.contains('heart')?10:14);
+});
+
+/* headline: words pop in one by one */
+const h1=q('.hero h1');
+if(h1){let i=0;const wrap=(txt,cls)=>{const f=document.createDocumentFragment();txt.split(/(\s+)/).forEach(p=>{if(!p)return;if(/^\s+$/.test(p)){f.appendChild(document.createTextNode(' '));return}const s=document.createElement('span');s.className='w '+(cls||'');s.style.setProperty('--i',i++);s.textContent=p;f.appendChild(s)});return f};
+  [...h1.childNodes].forEach(n=>{if(n.nodeType===3&&n.textContent.trim())n.replaceWith(wrap(n.textContent));else if(n.nodeType===1&&n.classList.contains('grad-text'))n.replaceWith(wrap(n.textContent,'grad-text'))})}
+
+/* hero parallax + holo tilt on product cards */
+if(fine&&!reduce){
+  const hv=q('#heroVisual'),hero=q('.hero');
+  hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hv.style.setProperty('--ty',((e.clientX-r.left)/r.width-.5)*14+'deg');hv.style.setProperty('--tx',-((e.clientY-r.top)/r.height-.5)*10+'deg')});
+  hero.addEventListener('pointerleave',()=>{hv.style.removeProperty('--ty');hv.style.removeProperty('--tx')});
+  document.addEventListener('pointermove',e=>{const c=e.target.closest('article.pcard');if(!c)return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    c.style.setProperty('--ry',((x-.5)*14).toFixed(1)+'deg');c.style.setProperty('--rx',((.5-y)*14).toFixed(1)+'deg');c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%')},{passive:true});
+  document.addEventListener('pointerout',e=>{const c=e.target.closest('article.pcard');if(c&&!c.contains(e.relatedTarget))['--rx','--ry'].forEach(p=>c.style.removeProperty(p))});
+}
+
+/* wishlist hearts */
+const wl=new Set();
+function hearts(){document.querySelectorAll('#pgrid article.pcard').forEach(c=>{const ph=c.querySelector('.ph');if(!ph||ph.querySelector('.heart'))return;const k=c.querySelector('h4').textContent,on=wl.has(k),b=document.createElement('button');
+  b.type='button';b.className='heart'+(on?' on':'');b.setAttribute('aria-pressed',on);b.setAttribute('aria-label','Thả tim: '+k);b.textContent=on?'♥':'♡';ph.appendChild(b)})}
+new MutationObserver(hearts).observe(q('#pgrid'),{childList:true});hearts();
+document.addEventListener('click',e=>{const h=e.target.closest('.heart');if(!h)return;const k=h.closest('.pcard').querySelector('h4').textContent,on=!wl.has(k);
+  on?wl.add(k):wl.delete(k);h.classList.toggle('on',on);h.setAttribute('aria-pressed',on);h.textContent=on?'♥':'♡';toast(on?`Đã thả tim “${k}” 💖`:'Đã bỏ tim')});
+
+/* confetti when an order completes */
+let fired=false;
+new MutationObserver(()=>{const d=q('.done-box');
+  if(d&&!fired){fired=true;const y=Math.min(Math.max(d.getBoundingClientRect().top,140),innerHeight-140);[0,250,500].forEach((t,i)=>setTimeout(()=>burst(innerWidth*(.25+i*.25),y,22),t));toast('Đơn hoàn tất! 🎉')}
+  else if(!d)fired=false}).observe(q('#trkLive'),{childList:true,subtree:true});
+
+/* after the spring-in finishes, hand the card back to its hover transitions */
+document.addEventListener('transitionend',e=>{const t=e.target;if(e.propertyName==='transform'&&t.classList&&t.classList.contains('reveal')&&t.classList.contains('in'))t.classList.remove('reveal','in')});
+})();
+</script>
+<div class="modal" id="loginModal" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="lgT"><button class="modal-x" data-close aria-label="Đóng">×</button><span class="eyebrow">Welcome to CROWDSHIP</span><h2 id="lgT">Chào bạn, mình là CROWDSHIP.</h2><p class="muted">Đăng nhập để lưu yêu cầu và theo dõi hành trình của bạn.</p><button class="btn btn-ghost" type="button" id="gBtn">G Tiếp tục với Google</button><div class="or">hoặc dùng email</div><form id="loginForm"><label>Email<input type="email" name="email" required placeholder="ban@email.com"></label><label>Mật khẩu<input type="password" name="pw" required minlength="4"></label><label>Bạn tham gia với vai trò<select name="role"><option value="buyer">Người mua</option><option value="traveler">Người mua hộ</option><option value="admin">Quản trị viên · demo</option></select></label><button class="btn btn-primary" type="submit">Tiếp tục ↗</button></form><p class="note">Tài khoản demo trên trình duyệt, chưa lưu dữ liệu thật.</p></div></div>
+<div class="modal" id="matchModal" hidden><div class="modal-card center"><span class="eyebrow">Smart traveler matching</span><h2>Đang tìm người phù hợp.</h2><div class="scanner"><div class="scan-ring"></div></div><p class="muted">Đối chiếu tuyến đường · lịch trình · sức chứa · loại hàng</p><ul class="mchecks"><li>✓ Tuyến Hàn Quốc → Việt Nam</li><li>✓ Lịch trình phù hợp</li><li>✓ Sức chứa &amp; loại hàng</li></ul></div></div>
+<script>
+(()=>{
+const modal=(id,on)=>{$('#'+id).hidden=!on;document.body.style.overflow=on?'hidden':''};
+const optHTML=(o,sel)=>`<button class="option ${o.method} ${sel&&sel.key===o.key?'sel':''}" data-opt="${o.key}"><div class="op-head"><span class="op-method">${o.method==='traveler'?'🧳 Người mua hộ':'📦 Vận chuyển thường'}</span>${o.badges.map(b=>`<em class="badge">${b}</em>`).join('')}</div><h4>${o.name}</h4><small class="op-sub">${o.sub}</small><div class="op-total">${vnd(o.total)}</div><ul><li><span>Thời gian</span><b>${o.etaLabel}</b></li><li><span>Dự kiến nhận</span><b>~${dateIn(o.eta)}</b></li><li><span>Theo dõi</span><b>${o.tracking}</b></li></ul>${o.warn?`<div class="warn">⚠ ${o.warn}</div>`:''}</button>`;
+function drawCmp(){
+  const o=S.order,{eligible,rejected}=S.res,sel=S.choice,el=$('#cmpDyn');el.hidden=false;
+  el.innerHTML=`${summary(o)}<h3 class="sub-h">Người mua hộ phù hợp (${eligible.length})</h3>${eligible.length?`<div class="match-list">${eligible.map((r,i)=>`<article class="match-card ${i?'':'top'}"><div class="mc-head"><div class="avatar">${r.t.name.split(' ').pop()[0]}</div><div class="mc-name"><b>${r.t.name} ${r.t.verified?'<span class="verified">✓ Đã xác minh</span>':''}</b><small>⭐ ${r.t.rating} · ${r.t.trips} chuyến · bay sau ${r.t.departDay} ngày</small></div><div class="mc-score"><strong>${r.score}</strong><small>/100</small></div></div><div class="score-bars">${Object.entries(r.scores).map(([k,v])=>`<div class="sb"><span>${LBL[k]} <em>${W[k]*100}%</em></span><b>${v}</b><div class="sb-track"><i data-w="${v}"></i></div></div>`).join('')}</div><div class="mc-foot"><span>Tổng ước tính <b>${vnd(r.total)}</b></span>${r.over?'<span class="warn">Vượt ngân sách</span>':''}${i?'':'<span class="badge-top">Đề xuất #1</span>'}</div></article>`).join('')}</div>`:`<div class="empty-match"><div class="ei">🧭</div><h3>Chưa có người mua hộ phù hợp</h3><p>Hệ thống chuyển sang vận chuyển thường để bạn so sánh và tự chọn.</p></div>`}${rejected.length?`<details class="rejected"><summary>Đã loại ${rejected.length} phương án không đạt điều kiện</summary><ul>${rejected.map(r=>`<li><b>${r.t.name}</b><span>${r.reasons.join('; ')}</span></li>`).join('')}</ul></details>`:''}<h3 class="sub-h">Chọn phương án</h3><div class="option-grid">${S.opts.map(x=>optHTML(x,sel)).join('')}</div><div class="panel-actions"><button class="btn btn-primary" id="confirmBtn" ${sel?'':'disabled'}>${sel?`Xác nhận · ${sel.name} ↗`:'Chọn một phương án'}</button></div>`;
+  requestAnimationFrame(()=>setTimeout(()=>$$('.sb-track i',el).forEach(i=>i.style.width=i.dataset.w+'%'),60));
+}
+function step2(){
+  $('#panel').innerHTML=`<div class="panel-body"><div class="form-head" style="padding:0"><span class="eyebrow">Create a request</span><h3>Yêu cầu đã gửi</h3><b>BƯỚC 02 / 02</b></div>${summary(S.order)}<p>Đã tìm được ${S.res.eligible.length} người mua hộ phù hợp. Xem báo giá và chọn phương án ở phần so sánh.</p><div class="panel-actions"><button class="btn btn-ghost" id="editReq">← Sửa yêu cầu</button><a class="btn btn-primary" href="#compare">Xem phương án ↗</a></div></div>`;
+  $('#editReq').onclick=()=>{S.step=0;viewForm()};
+}
+renderDemo=function(){
+  if(S.step===0){viewForm();return}
+  if(S.step===1){modal('matchModal',true);setTimeout(()=>{modal('matchModal',false);const all=buildOptions(S.order,S.res),v=S.order.view,f=all.filter(x=>!v||v==='both'||x.method===v);S.opts=f.length?f:all;S.choice=null;drawCmp();step2();showTab('compare',{scroll:false});$('#cmpDyn').scrollIntoView({behavior:'instant',block:'start'})},1800)}
+};
+$('#cmpDyn').addEventListener('click',e=>{
+  const o=e.target.closest('[data-opt]');if(o){S.choice=S.opts.find(x=>x.key===o.dataset.opt);drawCmp();return}
+  if(e.target.closest('#confirmBtn'))live();
+});
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-pickm]');if(!b)return;
+  if(!S.res)return;
+  e.preventDefault();S.opts=buildOptions(S.order,S.res);const o=S.opts.find(x=>x.method===b.dataset.pickm);
+  if(o){S.choice=o;drawCmp();$('#cmpDyn').scrollIntoView({behavior:'smooth'})}else location.hash='#create';
+});
+function live(){
+  const c=S.choice,steps=c.method==='traveler'?ST_T:ST_S,code='CS-'+(1000+Math.abs([...c.key].reduce((a,ch)=>a+ch.charCodeAt(0)*7,0))%9000)+'-K7',el=$('#trkLive');
+  let idx=0,playing=true;clearInterval(S.timer);el.hidden=false;
+  el.innerHTML=`${summary(S.order)}<div class="track-head"><div><small>Mã đơn mô phỏng</small><b class="mono">${code}</b></div><div><small>Phương án</small><b>${c.method==='traveler'?'Người mua hộ':'Vận chuyển thường'} · ${c.name}</b></div><div><small>Tổng chi phí</small><b>${vnd(c.total)}</b></div></div><div class="track-wrap"><ol class="timeline" id="tl"></ol><aside class="evidence"><h4>Bằng chứng đã lưu</h4><div id="ev"></div></aside></div><div class="panel-actions"><button class="btn btn-ghost" id="resetBtn">Tạo đơn mới</button><button class="btn btn-primary" id="playBtn"></button></div>`;
+  const draw=()=>{const done=idx>=steps.length-1;
+    $('#tl').innerHTML=steps.map((s,i)=>`<li class="${i<idx||(done&&i===idx)?'done':i===idx?'cur':''}"><span class="tl-dot">${i<idx||(done&&i===idx)?'✓':i+1}</span><div><b>${s[0]}</b><small>${s[1]}</small></div></li>`).join('');
+    const ev=steps.slice(0,idx+1).filter(s=>s[2]);
+    $('#ev').innerHTML=(ev.length?`<ul>${ev.map(s=>`<li><span>📎</span>${s[2]}</li>`).join('')}</ul>`:'<p class="muted">Chưa có bằng chứng ở bước này.</p>')+(done?'<div class="done-box"><b>🎉 Đơn hoàn tất</b><p>Bạn có thể đánh giá người mua hộ hoặc gửi khiếu nại kèm bằng chứng.</p></div>':'');
+    $('#playBtn').textContent=done?'↺ Chạy lại mô phỏng':playing?'⏸ Tạm dừng':'▶ Tiếp tục'};
+  const start=()=>{clearInterval(S.timer);S.timer=setInterval(()=>{if(idx<steps.length-1){idx++}else{playing=false;clearInterval(S.timer)}draw()},1300)};
+  draw();start();
+  $('#playBtn').onclick=()=>{if(idx>=steps.length-1){idx=0;playing=true;draw();start();return}playing=!playing;playing?start():clearInterval(S.timer);draw()};
+  $('#resetBtn').onclick=()=>{clearInterval(S.timer);S.order=null;S.choice=null;S.res=null;S.pick=null;S.step=0;$('#cmpDyn').hidden=true;el.hidden=true;viewForm();showTab('create')};
+  showTab('tracking',{scroll:false});el.scrollIntoView({behavior:'instant',block:'start'});
+}
+$('#pSearch').addEventListener('input',renderProducts);
+let user=null;
+document.addEventListener('click',e=>{
+  const l=e.target.closest('[data-login]');
+  if(l){e.preventDefault();if(user&&l.id==='loginBtn'){user=null;l.textContent='Đăng nhập';return}if(l.dataset.login)$('#loginForm').role.value=l.dataset.login;modal('loginModal',true);return}
+  if(e.target.id==='loginModal'||e.target.closest('#loginModal [data-close]'))modal('loginModal',false);
+});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#loginModal').hidden)modal('loginModal',false)});
+const signIn=n=>{user=n;$('#loginBtn').textContent='Chào, '+n+' · Thoát';modal('loginModal',false)};
+$('#loginForm').addEventListener('submit',e=>{e.preventDefault();signIn(e.target.email.value.split('@')[0])});
+$('#gBtn').addEventListener('click',()=>signIn('bạn'));
+})();
+</script>
+<script>
+/* ===== TAB: mỗi chức năng một tab, chỉ mở khi bấm ===== */
+const TABS={home:'Trang chủ',products:'Khám phá',how:'Cách hoạt động',travelers:'Người mua hộ',create:'Tạo yêu cầu',compare:'So sánh phương án',tracking:'Theo dõi đơn'};
+const TAB_ALIAS={top:'home',choice:'how'};
+let skipHash=false;
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+function showTab(id,o){
+  o=o||{};id=TAB_ALIAS[id]||id;if(!TABS[id])id='home';
+  document.querySelectorAll('.tab-panel').forEach(p=>{p.hidden=p.dataset.tab!==id});
+  document.querySelectorAll('[data-nav]').forEach(a=>{a.dataset.nav===id?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
+  document.body.dataset.view=id;
+  document.title=id==='home'?'CROWDSHIP · Mua hộ K-pop Hàn – Việt, đúng bản, đúng hạn':TABS[id]+' · CROWDSHIP';
+  const h='#'+id;
+  if(location.hash!==h){try{history[o.replace?'replaceState':'pushState'](null,'',h)}catch(e){skipHash=true;location.hash=h}}
+  if(o.scroll!==false)window.scrollTo({top:0,left:0,behavior:'instant'});
+}
+addEventListener('hashchange',()=>{if(skipHash){skipHash=false;return}showTab(location.hash.slice(1))});
+showTab(location.hash.slice(1),{scroll:false,replace:true});
+</script>
+</body>
+</html>
