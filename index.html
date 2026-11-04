@@ -535,6 +535,86 @@ select option{background:#fff;color:var(--text)}
 #products .psearch input::placeholder{color:#65557f;opacity:1}
 @media(prefers-reduced-motion:reduce){#products article.pcard:hover .ph .prod-art{transform:none}}
 </style>
+
+<style id="vn-typography-fix">
+/* Vietnamese typography fix: prevent clipped diacritics and improve readability without changing layout structure */
+html{-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility}
+body{font-feature-settings:"kern" 1,"liga" 1}
+.brand,.nav-links a,.btn,.hero-sub,.hero-steps li,.section-head .lead{font-family:var(--font)}
+h1,h2{letter-spacing:-.02em}
+.hero h1{font-family:var(--font);font-weight:800;line-height:1.12;letter-spacing:-.022em;padding-top:.08em;padding-bottom:.05em;text-wrap:balance}
+.hero h1 .grad-text{display:inline-block;padding-top:.04em}
+.section-head h2,.cta-band h2,.cat-detail h3{font-family:var(--font);line-height:1.15;letter-spacing:-.018em;padding-top:.05em}
+.eyebrow-up,.brand,.nav-links a,.btn{line-height:1.25}
+.pill,.hero-steps li,.pc-ver,.route-pill,.float-chip{line-height:1.3}
+#products article.pcard .pb h4,#products .cat b{font-family:var(--font);line-height:1.4;letter-spacing:-.008em}
+@media (max-width:700px){.hero h1{line-height:1.14;letter-spacing:-.018em}}
+</style>
+
+<style id="type-icons-refined">
+/* Refined icons for request-form product types */
+.type-card{align-items:flex-start;justify-content:flex-start}
+.type-card .ti{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;margin:0 0 8px;line-height:1}
+.type-card .ti svg.prod-art{width:34px;height:34px;display:block;filter:drop-shadow(0 3px 5px rgba(36,20,71,.14))}
+.type-card b{display:block;color:#251647;line-height:1.34;min-height:2.5em}
+.type-card small{display:block;color:#66577f;font-weight:600;font-size:.78rem;line-height:1.3}
+.type-card:hover .ti svg.prod-art{transform:translateY(-1px) scale(1.04)}
+.type-card:has(input:checked) .ti svg.prod-art{transform:scale(1.06)}
+.order-summary .os-i{width:52px;height:52px;display:inline-flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(91,63,245,.08);border:1px solid rgba(91,63,245,.18)}
+.order-summary .os-i svg.prod-art{width:38px;height:38px;display:block;filter:drop-shadow(0 3px 5px rgba(36,20,71,.12))}
+</style>
+<style id="hero-vietnamese-diacritic-fix">
+/* A word-by-word animation wraps the gradient headline in inline-block spans.
+   Expand each span's paint area below its baseline so Vietnamese tone marks
+   (notably dấu nặng: bạn, tận) are no longer clipped by background-clip:text.
+   Negative margin cancels extra layout space; all original styles stay intact. */
+.hero h1 .w.grad-text {
+  padding-bottom: .24em;
+  margin-bottom: -.24em;
+  overflow: visible;
+}
+</style>
+
+<style id="crowdship-auth-forms">
+/* Only the authentication modal, traveler application indicator and new nav link */
+.nav-links .auth-nav-register{padding:8px 9px!important;color:#4d33ca!important;font-weight:800!important;white-space:nowrap}
+.nav-links .auth-nav-register:hover{background:rgba(91,63,245,.09)!important}
+#loginModal .auth-card{width:min(565px,100%);padding:26px 28px;gap:12px;max-height:90dvh}
+#loginModal .auth-card > .eyebrow{justify-self:start;max-width:calc(100% - 42px)}
+#loginModal .auth-card h2{font-family:var(--font);font-size:clamp(1.45rem,3vw,1.85rem);line-height:1.3;letter-spacing:-.02em;margin:0;padding-top:4px}
+#loginModal .auth-card p{margin:0}
+#loginModal .auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;border-radius:14px;background:#f1edfc;padding:5px;border:1px solid #e4def6}
+#loginModal .auth-tab{padding:10px;border:0;border-radius:10px;background:transparent;color:#554776;font-weight:800}
+#loginModal .auth-tab[aria-selected="true"]{background:#fff;box-shadow:0 2px 8px rgba(36,20,71,.10);color:#4b2cce}
+#loginModal .auth-pane[hidden],#loginModal .auth-traveler-extra[hidden],#loginModal .auth-tabs[hidden]{display:none!important}
+#loginModal .auth-pane{display:block}
+#loginModal .auth-card form{gap:13px}
+#loginModal .auth-card label{color:#39295d;font-weight:700;font-size:.88rem}
+#loginModal .auth-card input,#loginModal .auth-card select,#loginModal .auth-card textarea{background:#fff;color:#281847;width:100%;border:2px solid #dcd5ef;padding:11px 13px;border-radius:12px;font:500 .93rem var(--font);min-width:0}
+#loginModal .auth-card input:focus,#loginModal .auth-card select:focus,#loginModal .auth-card textarea:focus{outline:none;border-color:#694cff;box-shadow:0 0 0 3px rgba(105,76,255,.12)}
+#loginModal .auth-card select option{color:#281847;background:#fff}
+#loginModal .auth-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#loginModal .auth-muted{color:#695a82;font-size:.86rem;line-height:1.6}
+#loginModal .auth-info{padding:12px 14px;border-radius:12px;background:#f3efff;border:1px solid #e1d6ff;color:#4c3676;font-size:.85rem;line-height:1.55}
+#loginModal .auth-traveler-extra{display:grid;gap:12px;padding-top:8px;border-top:1px solid #e5ddf3}
+#loginModal .auth-traveler-extra h3{color:#29184a;font-family:var(--font);font-size:1.04rem;line-height:1.35;margin:0}
+#loginModal .auth-chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+#loginModal .auth-chip{display:flex;flex-direction:row;align-items:center;gap:6px;font-weight:650;font-size:.83rem;background:#f5f1fc;border:1px solid #e1d9f1;border-radius:10px;padding:9px;cursor:pointer}
+#loginModal .auth-chip input,#loginModal .auth-consent input{width:17px;height:17px;min-width:17px;flex:none;accent-color:#5b3ff5}
+#loginModal .auth-consent{display:flex;flex-direction:row;align-items:flex-start;gap:9px;font-size:.85rem;line-height:1.5;cursor:pointer}
+#loginModal .auth-feedback{font-weight:700;font-size:.87rem;line-height:1.5;padding:10px 12px;border-radius:10px;background:#fff0f2;color:#b02448;border:1px solid #ffc5d3}
+#loginModal .auth-feedback.ok{background:#e8f9ef;color:#086841;border-color:#a8e8c1}
+#loginModal .auth-feedback[hidden]{display:none!important}
+#loginModal .auth-switch{color:#594879;font-size:.88rem;text-align:center}
+#loginModal .auth-switch button{background:none;border:0;color:#4b2cce;text-decoration:underline;font-weight:800;padding:2px}
+#loginModal button:disabled{opacity:.55;cursor:wait}
+#loginModal .auth-back{justify-self:start;color:#4b2cce;font-weight:800;background:transparent;border:0;padding:4px 0}
+#loginModal .auth-guide{font-size:.79rem;color:#6a5b82;border-top:1px solid #e5ddf3;padding-top:10px;line-height:1.55}
+.auth-app-status{padding:15px 18px;border:2px solid #9c84ff;border-radius:16px;background:#f5f0ff;color:#35225e;font-weight:650;margin:0 0 20px}
+.auth-app-status strong{color:#492ad2}
+@media (max-width:1080px) and (min-width:821px){.nav-links{gap:0}.nav-links a:not(.btn){padding-inline:8px;font-size:.88rem}.nav-inner .brand{font-size:1.05rem}}
+@media(max-width:600px){#loginModal .auth-card{padding:20px 15px}#loginModal .auth-row{grid-template-columns:1fr}#loginModal .auth-chips{grid-template-columns:1fr 1fr}#loginModal .auth-card h2{font-size:1.4rem}}
+</style>
 </head>
 <body id="top">
 
@@ -544,7 +624,7 @@ select option{background:#fff;color:var(--text)}
     <a href="#home" class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" width="24" height="24"><path d="M14 36L50 16L40 50L30 38Z" fill="#fff"/></svg></span><span>CROWD<b>SHIP</b></span></a>
     <nav class="nav-links" id="navlinks" aria-label="Điều hướng chính">
       <a href="#home" data-nav="home">Trang chủ</a><a href="#products" data-nav="products">Khám phá</a><a href="#how" data-nav="how">Cách hoạt động</a><a href="#travelers" data-nav="travelers">Người mua hộ</a><a href="#compare" data-nav="compare">So sánh</a><a href="#tracking" data-nav="tracking">Theo dõi</a>
-      <a href="#" id="loginBtn" data-login="" class="btn btn-sm btn-ghost nav-cta">Đăng nhập</a><a href="#create" data-nav="create" class="btn btn-sm btn-primary">Tạo yêu cầu ↗</a>
+      <a href="#" id="loginBtn" data-login="" class="btn btn-sm btn-ghost nav-cta">Đăng nhập</a><a href="#" id="registerBtn" data-register="buyer" class="auth-nav-register">Đăng ký</a><a href="#create" data-nav="create" class="btn btn-sm btn-primary">Tạo yêu cầu ↗</a>
     </nav>
     <button class="burger" id="burger" aria-label="Mở menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
@@ -602,8 +682,9 @@ select option{background:#fff;color:var(--text)}
 
 <section class="section section-alt tab-panel" id="travelers" data-tab="travelers" hidden><div class="container">
   <div class="section-head reveal"><span class="eyebrow">People already on the way</span><h2>Chuyến đi nào cũng bắt đầu từ ai đó.</h2><p class="lead">Hồ sơ người mua hộ mẫu, thông tin cá nhân được giữ riêng tư.</p></div>
+  <div id="travelerAccountStatus" class="auth-app-status" role="status" aria-live="polite" hidden></div>
   <div class="tgrid" id="tgrid"></div>
-  <p class="mt-l"><a href="#" data-login="traveler" class="btn btn-ghost">Đăng ký làm người mua hộ ↗</a></p>
+  <p class="mt-l"><a href="#" data-register="traveler" class="btn btn-ghost">Đăng ký làm người mua hộ ↗</a></p>
 </div></section>
 
 <section class="section tab-panel" id="create" data-tab="create" hidden><div class="container create-grid">
@@ -740,7 +821,7 @@ function renderStepper(){return;
   $('#stepper').innerHTML=STEPS.map((s,i)=>`<button class="step ${i===S.step?'active':''} ${i<S.step?'past':''}" data-go="${i}" ${canGo(i)?'':'disabled'} ${i===S.step?'aria-current="step"':''}><span class="ico">${s[0]}</span><span class="lbl">${s[1]}</span></button>`).join('');
 }
 function summary(o){const g=GROUPS.find(x=>x.id===o.group),s=STORES.find(x=>x.id===o.store),t=TYPES.find(x=>x.id===o.type);
-  return `<div class="order-summary"><span class="os-i">${t.icon}</span><div><b>${o.title||g.name+' · '+o.member} · ${o.version}</b><small>${o.qty} × ${t.label} · mua tại ${s.name} (${s.city}) · cần trong ${o.deadlineDays} ngày · ngân sách ${vnd(o.budget)}</small></div></div>`}
+  return `<div class="order-summary"><span class="os-i">${productArt(t.id)}</span><div><b>${o.title||g.name+' · '+o.member} · ${o.version}</b><small>${o.qty} × ${t.label} · mua tại ${s.name} (${s.city}) · cần trong ${o.deadlineDays} ngày · ngân sách ${vnd(o.budget)}</small></div></div>`}
 function renderDemo(){
   renderStepper();
   const p=$('#panel');p.style.animation='none';p.offsetHeight;p.style.animation='';
@@ -759,7 +840,7 @@ function viewForm(){
     <label>Thành viên<select name="member">${g.members.map(m=>`<option ${m===f.member?'selected':''}>${m}</option>`).join('')}</select></label>
     <label>Phiên bản<select name="version">${VERSIONS.map(v=>`<option ${v===f.version?'selected':''}>${v}</option>`).join('')}</select></label>
     <label>Cửa hàng / điểm mua<select name="store">${STORES.map(s=>`<option value="${s.id}" ${s.id===f.store?'selected':''}>${s.name} (${s.city})</option>`).join('')}</select></label>
-    <div class="span-2 lbl-like">Loại sản phẩm<div class="type-grid" style="margin-top:6px">${TYPES.map(t=>`<label class="type-card"><input type="radio" name="type" value="${t.id}" ${t.id===f.type?'checked':''}><span class="ti">${t.icon}</span><b>${t.label}</b><small>~${vnd(t.price)}/món</small></label>`).join('')}</div></div>
+    <div class="span-2 lbl-like">Loại sản phẩm<div class="type-grid" style="margin-top:6px">${TYPES.map(t=>`<label class="type-card"><input type="radio" name="type" value="${t.id}" ${t.id===f.type?'checked':''}><span class="ti">${productArt(t.id)}</span><b>${t.label}</b><small>~${vnd(t.price)}/món</small></label>`).join('')}</div></div>
     <label id="qtyL">Số lượng<input type="number" name="qty" min="1" max="20" value="${f.qty}"><em class="err" hidden>Số lượng từ 1 đến 20.</em></label>
     <label id="budL">Ngân sách tối đa (VND)<input type="number" name="budget" min="100000" step="50000" value="${f.budget}"><em class="err" hidden>Ngân sách tối thiểu 100.000 đ.</em></label>
     <div class="span-2 lbl-like">Hạn cần nhận<div class="seg" style="margin-top:6px">${DEADLINES.map(d=>`<label><input type="radio" name="deadlineDays" value="${d[0]}" ${d[0]===f.deadlineDays?'checked':''}>${d[1]}</label>`).join('')}</div></div>
@@ -930,7 +1011,7 @@ document.addEventListener('click',e=>{
   else{const c=CATS.find(x=>x.id===a.dataset.start);startOrder(c.id,c.label)}
 });
 renderProducts();
-$('#tgrid').innerHTML=TRAVELERS.filter(t=>t.route==='KR-VN').map(t=>`<div class="card tcard"><div class="avatar">${t.name.split(' ').pop()[0]}</div><h4>${t.name}</h4><p class="meta">${t.city} → Việt Nam · ${t.trips} chuyến · ★ ${t.rating}</p><p class="meta">Nhận tối đa ${t.capacity} món · phí từ ${vnd(t.fee)}</p><span class="vf ${t.verified?'':'no'}">${t.verified?'✓ Đã xác minh':'Chưa xác minh'}</span></div>`).join('')+`<div class="card tcard tcard-cta"><a href="#create" class="btn btn-ghost">Đăng ký làm người mua hộ ↗</a></div>`;
+$('#tgrid').innerHTML=TRAVELERS.filter(t=>t.route==='KR-VN').map(t=>`<div class="card tcard"><div class="avatar">${t.name.split(' ').pop()[0]}</div><h4>${t.name}</h4><p class="meta">${t.city} → Việt Nam · ${t.trips} chuyến · ★ ${t.rating}</p><p class="meta">Nhận tối đa ${t.capacity} món · phí từ ${vnd(t.fee)}</p><span class="vf ${t.verified?'':'no'}">${t.verified?'✓ Đã xác minh':'Chưa xác minh'}</span></div>`).join('')+`<div class="card tcard tcard-cta"><a href="#" data-register="traveler" class="btn btn-ghost">Đăng ký làm người mua hộ ↗</a></div>`;
 const TRK=[['Yêu cầu đã xác nhận','24 Th10 · 09:30',1],['Đã mua & gửi bằng chứng','25 Th10 · 15:20 · Hóa đơn + ảnh',1],['Đang trên đường về Việt Nam','27 Th10 · 08:15',1],['Giao hàng & xác nhận','Dự kiến cập nhật tiếp',0]];
 function trk(code){
   const ok=code.trim().toUpperCase()==='CS-2026-1042';
@@ -995,7 +1076,55 @@ new MutationObserver(()=>{const d=q('.done-box');
 document.addEventListener('transitionend',e=>{const t=e.target;if(e.propertyName==='transform'&&t.classList&&t.classList.contains('reveal')&&t.classList.contains('in'))t.classList.remove('reveal','in')});
 })();
 </script>
-<div class="modal" id="loginModal" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="lgT"><button class="modal-x" data-close aria-label="Đóng">×</button><span class="eyebrow">Welcome to CROWDSHIP</span><h2 id="lgT">Chào bạn, mình là CROWDSHIP.</h2><p class="muted">Đăng nhập để lưu yêu cầu và theo dõi hành trình của bạn.</p><button class="btn btn-ghost" type="button" id="gBtn">G Tiếp tục với Google</button><div class="or">hoặc dùng email</div><form id="loginForm"><label>Email<input type="email" name="email" required placeholder="ban@email.com"></label><label>Mật khẩu<input type="password" name="pw" required minlength="4"></label><label>Bạn tham gia với vai trò<select name="role"><option value="buyer">Người mua</option><option value="traveler">Người mua hộ</option><option value="admin">Quản trị viên · demo</option></select></label><button class="btn btn-primary" type="submit">Tiếp tục ↗</button></form><p class="note">Tài khoản demo trên trình duyệt, chưa lưu dữ liệu thật.</p></div></div>
+<div class="modal" id="loginModal" hidden>
+  <div class="modal-card auth-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="modal-x" type="button" data-close aria-label="Đóng cửa sổ">×</button>
+    <span class="eyebrow">Tài khoản CROWDSHIP</span>
+    <h2 id="authTitle">Chào mừng bạn đến với CROWDSHIP!</h2>
+    <p id="authSubtitle" class="auth-muted">Đăng nhập hoặc tạo tài khoản để bắt đầu trải nghiệm.</p>
+    <div class="auth-tabs" id="authTabs" role="tablist" aria-label="Đăng nhập hoặc đăng ký">
+      <button type="button" class="auth-tab" id="authLoginTab" role="tab" aria-controls="loginPane" aria-selected="true" data-auth-tab="login">Đăng nhập</button>
+      <button type="button" class="auth-tab" id="authRegisterTab" role="tab" aria-controls="registerPane" aria-selected="false" data-auth-tab="register">Đăng ký</button>
+    </div>
+    <section id="loginPane" class="auth-pane" role="tabpanel" aria-labelledby="authLoginTab">
+      <form id="loginForm" novalidate>
+        <label>Email <input name="email" type="email" autocomplete="email" required placeholder="ban@email.com"></label>
+        <label>Mật khẩu <input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Nhập mật khẩu của bạn"></label>
+        <p class="auth-feedback" id="loginError" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary">Đăng nhập ↗</button>
+        <p class="auth-switch">Chưa có tài khoản? <button type="button" data-auth-tab="register">Đăng ký ngay</button></p>
+      </form>
+    </section>
+    <section id="registerPane" class="auth-pane" role="tabpanel" aria-labelledby="authRegisterTab" hidden>
+      <form id="registerForm" novalidate>
+        <label>Đăng ký với vai trò
+          <select name="role" required aria-label="Loại tài khoản"><option value="buyer">Người mua hàng</option><option value="traveler">Người mua hộ (đăng ký xét duyệt)</option></select>
+        </label>
+        <div class="auth-row"><label>Họ và tên *<input name="fullName" type="text" required minlength="2" maxlength="80" autocomplete="name" placeholder="Nguyễn Văn A"></label>
+        <label>Số điện thoại *<input name="phone" type="tel" required autocomplete="tel" placeholder="09xxxxxxxx" maxlength="20"></label></div>
+        <label>Email *<input name="email" type="email" required autocomplete="email" maxlength="140" placeholder="ban@email.com"></label>
+        <div class="auth-row"><label>Mật khẩu *<input name="password" type="password" minlength="8" autocomplete="new-password" required placeholder="Ít nhất 8 ký tự"></label>
+        <label>Xác nhận mật khẩu *<input name="confirmPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Nhập lại mật khẩu"></label></div>
+        <div class="auth-traveler-extra" id="signupTravelerFields" hidden></div>
+        <label class="auth-consent"><input type="checkbox" name="consent" required> <span>Tôi đồng ý cung cấp thông tin trong bản demo và hiểu rằng đăng ký người mua hộ cần được xét duyệt trước khi hoạt động.</span></label>
+        <p class="auth-feedback" id="registerError" role="alert" hidden></p>
+        <button type="submit" class="btn btn-primary" id="registerSubmit">Tạo tài khoản ↗</button>
+        <p class="auth-switch">Đã có tài khoản? <button type="button" data-auth-tab="login">Đăng nhập</button></p>
+      </form>
+    </section>
+    <section id="applyPane" class="auth-pane" hidden>
+      <button type="button" class="auth-back" id="applyBack">← Quay lại</button>
+      <p class="auth-info">Dùng tài khoản hiện tại để gửi hồ sơ người mua hộ. Hồ sơ sẽ ở trạng thái <b>chờ xét duyệt</b>, không tự động được xác minh.</p>
+      <form id="travelerApplyForm" novalidate>
+        <div class="auth-traveler-extra" id="existingTravelerFields"></div>
+        <label class="auth-consent"><input type="checkbox" name="consent" required><span>Tôi xác nhận lịch trình và thông tin nhận mua đã khai trong bản demo.</span></label>
+        <p class="auth-feedback" id="applyError" role="alert" hidden></p>
+        <button class="btn btn-primary" type="submit">Gửi hồ sơ người mua hộ ↗</button>
+      </form>
+    </section>
+    <p class="auth-guide">ⓘ Bản demo HTML chạy cục bộ: tài khoản và hồ sơ chỉ lưu trên trình duyệt này, không gửi tới máy chủ. Không dùng mật khẩu thường dùng. Chưa có xác minh, duyệt hồ sơ hoặc thanh toán thực tế.</p>
+  </div>
+</div>
 <div class="modal" id="matchModal" hidden><div class="modal-card center"><span class="eyebrow">Smart traveler matching</span><h2>Đang tìm người phù hợp.</h2><div class="scanner"><div class="scan-ring"></div></div><p class="muted">Đối chiếu tuyến đường · lịch trình · sức chứa · loại hàng</p><ul class="mchecks"><li>✓ Tuyến Hàn Quốc → Việt Nam</li><li>✓ Lịch trình phù hợp</li><li>✓ Sức chứa &amp; loại hàng</li></ul></div></div>
 <script>
 (()=>{
@@ -1040,16 +1169,140 @@ function live(){
   showTab('tracking',{scroll:false});el.scrollIntoView({behavior:'instant',block:'start'});
 }
 $('#pSearch').addEventListener('input',renderProducts);
-let user=null;
+/* Authentication & traveler registration: local-only prototype, never a production auth system. */
+const authToast=message=>{
+ const el=document.createElement('div');el.className='toast show';el.textContent=message;el.setAttribute('role','status');document.body.appendChild(el);
+ setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),400)},2600);
+};
+const ACCOUNT_KEY='crowdship_demo_accounts_v2';
+let user=null, authView='login';
+const getAccounts=()=>{try{const a=JSON.parse(localStorage.getItem(ACCOUNT_KEY)||'[]');return Array.isArray(a)?a.filter(x=>x&&typeof x.email==='string'&&['buyer','traveler'].includes(x.role)):[]}catch{return []}};
+const saveAccounts=a=>localStorage.setItem(ACCOUNT_KEY,JSON.stringify(a));
+const cleanEmail=s=>String(s||'').trim().toLowerCase();
+const authError=(id,message)=>{const el=$('#'+id);el.textContent=message;el.hidden=!message};
+const today=()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')};
+const travelerInputs=()=>`<h3>Thông tin đăng ký người mua hộ</h3>
+  <p class="auth-info">Mỗi lịch trình sẽ cần kiểm tra riêng. Đăng ký không đồng nghĩa được duyệt hoặc được phép nhận vận chuyển mọi loại hàng.</p>
+  <div class="auth-row">
+    <label>Địa điểm tại Hàn Quốc *<select name="fromCity" required><option value="">Chọn thành phố</option><option value="Seoul">Seoul</option><option value="Busan">Busan</option><option value="Incheon">Incheon</option><option value="Daegu">Daegu</option><option value="Daejeon">Daejeon</option><option value="Khác tại Hàn Quốc">Khác tại Hàn Quốc</option></select></label>
+    <label>Điểm đến Việt Nam *<select name="toCity" required><option value="">Chọn điểm đến</option><option value="Hà Nội">Hà Nội</option><option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option><option value="Đà Nẵng">Đà Nẵng</option><option value="Khác tại Việt Nam">Khác tại Việt Nam</option></select></label>
+  </div>
+  <div class="auth-row">
+    <label>Ngày dự kiến về Việt Nam *<input type="date" name="departure" min="${today()}" required></label>
+    <label>Khả năng mang hàng (món) *<input type="number" name="capacity" min="1" max="100" value="5" required></label>
+  </div>
+  <div class="auth-row">
+    <label>Phí mua hộ dự kiến (VND) *<input type="number" name="fee" min="0" max="10000000" step="1000" value="90000" required></label>
+    <label>Điểm mua thuận tiện *<select name="shoppingArea" required><option value="">Chọn khu vực</option><option value="Hongdae">Hongdae</option><option value="Myeongdong">Myeongdong</option><option value="Gangnam">Gangnam</option><option value="Seongsu">Seongsu</option><option value="Seomyeon">Seomyeon</option><option value="Khác">Khác</option></select></label>
+  </div>
+  <span class="auth-muted" style="font-weight:800">Loại sản phẩm có thể nhận mua *</span>
+  <div class="auth-chips">${CATS.map(c=>`<label class="auth-chip"><input type="checkbox" name="travelTypes" value="${c.id}">${c.label}</label>`).join('')}</div>
+  <label>Ghi chú lịch trình / kinh nghiệm (không bắt buộc)<textarea name="travelNote" rows="2" maxlength="500" placeholder="VD: Bay về Hà Nội, nhận hàng tại Seoul…"></textarea></label>`;
+$('#signupTravelerFields').innerHTML=travelerInputs();
+$('#existingTravelerFields').innerHTML=travelerInputs();
+const updateSignupRole=()=>{
+  const show=$('#registerForm').elements.role.value==='traveler';
+  const extra=$('#signupTravelerFields');extra.hidden=!show;
+  extra.querySelectorAll('input,select').forEach(el=>{if(el.name!=='travelTypes')el.required=show;el.disabled=!show});
+  extra.querySelector('textarea').disabled=!show;
+  $('#registerSubmit').textContent=show?'Đăng ký & gửi hồ sơ xét duyệt ↗':'Tạo tài khoản ↗';
+};
+$('#registerForm').elements.role.addEventListener('change',updateSignupRole);
+updateSignupRole();
+const showAuth=(view='login',role='buyer')=>{
+  authView=view;
+  const apply=view==='apply';
+  $('#loginPane').hidden=view!=='login';$('#registerPane').hidden=view!=='register';$('#applyPane').hidden=!apply;$('#authTabs').hidden=apply;
+  $('#authLoginTab').setAttribute('aria-selected',String(view==='login'));
+  $('#authRegisterTab').setAttribute('aria-selected',String(view==='register'));
+  $('#authTitle').textContent=apply?'Trở thành người mua hộ':view==='register'?'Tạo tài khoản của bạn':'Chào mừng quay lại!';
+  $('#authSubtitle').textContent=apply?'Hoàn thiện thông tin chuyến đi để gửi đăng ký.':view==='register'?'Bắt đầu với vai trò người mua hàng hoặc người mua hộ.':'Đăng nhập bằng tài khoản đã tạo trên trình duyệt này.';
+  for(const id of ['loginError','registerError','applyError'])authError(id,'');
+  if(view==='register'){$('#registerForm').elements.role.value=role==='traveler'?'traveler':'buyer';updateSignupRole()}
+  modal('loginModal',true);
+  setTimeout(()=>{const focus=$('#'+(view==='login'?'loginForm':view==='register'?'registerForm':'travelerApplyForm')).querySelector('input:not([type=checkbox]):not(:disabled),select:not(:disabled)');focus?.focus({preventScroll:true})},30);
+};
+const travelerDetails=form=>{
+  const fd=new FormData(form),types=fd.getAll('travelTypes');
+  if(!types.length)throw Error('Vui lòng chọn ít nhất một loại sản phẩm có thể nhận mua.');
+  const departure=String(fd.get('departure')||'');
+  if(departure<today())throw Error('Ngày dự kiến về Việt Nam phải từ hôm nay trở đi.');
+  return {fromCity:String(fd.get('fromCity')||''),toCity:String(fd.get('toCity')||''),departure,capacity:Number(fd.get('capacity')),fee:Number(fd.get('fee')),shoppingArea:String(fd.get('shoppingArea')||''),types,note:String(fd.get('travelNote')||'').trim().slice(0,500),status:'pending',submittedAt:new Date().toISOString()};
+};
+const hashPassword=async (password,salt)=>{
+  if(!globalThis.crypto?.subtle)throw Error('Trình duyệt không hỗ trợ mã hóa cần thiết. Hãy mở file bằng Chrome hoặc chạy trên localhost/HTTPS.');
+  const enc=new TextEncoder(),key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']);
+  const bytes=await crypto.subtle.deriveBits({name:'PBKDF2',salt:new Uint8Array(salt.match(/.{2}/g).map(x=>parseInt(x,16))),iterations:160000,hash:'SHA-256'},key,256);
+  return [...new Uint8Array(bytes)].map(x=>x.toString(16).padStart(2,'0')).join('');
+};
+const newSalt=()=>[...crypto.getRandomValues(new Uint8Array(16))].map(x=>x.toString(16).padStart(2,'0')).join('');
+const updateAccountUI=()=>{
+  $('#loginBtn').textContent=user?'Chào, '+user.name.trim().split(/\s+/).slice(-1)[0]+' · Thoát':'Đăng nhập';
+  $('#registerBtn').hidden=!!user;
+  const el=$('#travelerAccountStatus');
+  el.hidden=!user?.application;
+  if(user?.application){
+    el.replaceChildren();const strong=document.createElement('strong');strong.textContent='Hồ sơ người mua hộ: Chờ xét duyệt';
+    const detail=document.createElement('div');detail.textContent=`${user.name} · ${user.application.fromCity} → ${user.application.toCity} · dự kiến ${user.application.departure}. Thông tin chỉ lưu trên trình duyệt này; chưa được xét duyệt thật.`;
+    el.append(strong,detail);
+  }
+};
+const loginDone=account=>{user=account;modal('loginModal',false);updateAccountUI();authToast('Đã đăng nhập vào tài khoản demo!')};
+const submitBusy=async (form,fn,errId)=>{
+  const button=form.querySelector('button[type="submit"]');if(button.disabled)return;
+  button.disabled=true;
+  try{if(!form.reportValidity())return;await fn()}catch(e){authError(errId,e?.message||'Không thể thực hiện. Vui lòng thử lại.')}finally{button.disabled=false}
+};
+$('#loginForm').addEventListener('submit',e=>{e.preventDefault();submitBusy(e.currentTarget,async()=>{
+  const f=e.currentTarget,account=getAccounts().find(a=>a.email===cleanEmail(f.elements.email.value));
+  if(!account)throw Error('Không tìm thấy tài khoản. Vui lòng chọn tab Đăng ký.');
+  if(!account.salt||!account.hash||await hashPassword(f.elements.password.value,account.salt)!==account.hash)throw Error('Email hoặc mật khẩu không đúng.');
+  f.reset();loginDone(account);
+},'loginError')});
+$('#registerForm').addEventListener('submit',e=>{e.preventDefault();submitBusy(e.currentTarget,async()=>{
+  const f=e.currentTarget,role=f.elements.role.value;
+  if(!['buyer','traveler'].includes(role))throw Error('Vai trò không hợp lệ.');
+  const name=f.elements.fullName.value.trim(),phone=f.elements.phone.value.trim(),email=cleanEmail(f.elements.email.value),password=f.elements.password.value;
+  if(name.length<2)throw Error('Vui lòng nhập họ tên hợp lệ.');
+  if(phone.replace(/\D/g,'').length<9||phone.replace(/\D/g,'').length>15)throw Error('Số điện thoại cần có từ 9 đến 15 chữ số.');
+  if(password!==f.elements.confirmPassword.value)throw Error('Mật khẩu xác nhận không trùng khớp.');
+  const accounts=getAccounts();if(accounts.some(a=>a.email===email))throw Error('Email đã được đăng ký. Vui lòng đăng nhập hoặc dùng email khác.');
+  const application=role==='traveler'?travelerDetails(f):null;
+  const salt=newSalt(),hash=await hashPassword(password,salt);
+  const account={id:'usr_'+Date.now().toString(36),name,email,phone,role,application,salt,hash,createdAt:new Date().toISOString()};
+  try{saveAccounts([...accounts,account])}catch{throw Error('Không thể lưu trên trình duyệt này. Vui lòng bật quyền lưu trữ cục bộ.');}
+  f.reset();updateSignupRole();loginDone(account);
+  if(application){authToast('Đã ghi nhận hồ sơ demo · chờ xét duyệt');showTab('travelers')}
+},'registerError')});
+$('#travelerApplyForm').addEventListener('submit',e=>{e.preventDefault();submitBusy(e.currentTarget,async()=>{
+  if(!user)throw Error('Vui lòng đăng nhập trước khi gửi hồ sơ.');
+  if(user.application?.status==='pending')throw Error('Bạn đã có một hồ sơ đang chờ xét duyệt.');
+  const application=travelerDetails(e.currentTarget),accounts=getAccounts();const idx=accounts.findIndex(a=>a.id===user.id);
+  if(idx<0)throw Error('Không tìm thấy tài khoản. Vui lòng đăng nhập lại.');
+  accounts[idx]={...accounts[idx],role:'traveler',application};
+  try{saveAccounts(accounts)}catch{throw Error('Không thể lưu hồ sơ tại trình duyệt này.');}
+  user=accounts[idx];e.currentTarget.reset();modal('loginModal',false);updateAccountUI();showTab('travelers');authToast('Đã gửi hồ sơ demo · chờ xét duyệt');
+},'applyError')});
+const openTravelerApply=()=>{
+  if(user?.application){showTab('travelers');updateAccountUI();$('#travelerAccountStatus').scrollIntoView({block:'center',behavior:'smooth'});return}
+  if(user){showAuth('apply');return}
+  showAuth('register','traveler');
+};
 document.addEventListener('click',e=>{
-  const l=e.target.closest('[data-login]');
-  if(l){e.preventDefault();if(user&&l.id==='loginBtn'){user=null;l.textContent='Đăng nhập';return}if(l.dataset.login)$('#loginForm').role.value=l.dataset.login;modal('loginModal',true);return}
-  if(e.target.id==='loginModal'||e.target.closest('#loginModal [data-close]'))modal('loginModal',false);
+  const close=e.target.closest('#loginModal [data-close]');
+  if(close||e.target.id==='loginModal'){modal('loginModal',false);return}
+  const reg=e.target.closest('[data-register]');
+  if(reg){e.preventDefault();reg.dataset.register==='traveler'?openTravelerApply():showAuth('register');return}
+  const log=e.target.closest('[data-login]');
+  if(log){e.preventDefault();if(log.dataset.login==='traveler'){openTravelerApply();return}
+    if(user&&log.id==='loginBtn'){user=null;updateAccountUI();authToast('Đã đăng xuất khỏi bản demo');return}
+    showAuth('login');return}
+  const authTab=e.target.closest('#loginModal [data-auth-tab]');
+  if(authTab){showAuth(authTab.dataset.authTab);return}
+  if(e.target.closest('#applyBack')){modal('loginModal',false);showTab('travelers');return}
 });
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#loginModal').hidden)modal('loginModal',false)});
-const signIn=n=>{user=n;$('#loginBtn').textContent='Chào, '+n+' · Thoát';modal('loginModal',false)};
-$('#loginForm').addEventListener('submit',e=>{e.preventDefault();signIn(e.target.email.value.split('@')[0])});
-$('#gBtn').addEventListener('click',()=>signIn('bạn'));
+updateAccountUI();
 })();
 </script>
 <script>
